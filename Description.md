@@ -1,4 +1,4 @@
-# Project Description
+# Description
 
 ## Business Context
 
@@ -35,10 +35,10 @@ By implementing a robust predictive maintenance system, this solution can lead t
 
 | Feature | Description | Unit |
 |---------|-------------|------|
-| Engine_RPM | The number of revolutions per minute of the engine, indicating engine speed. | Revolutions per Minute (RPM) |
-| Lub_Oil_Pressure | The pressure of the lubricating oil in the engine, essential for reducing friction and wear. | bar or kilopascals (kPa) |
-| Fuel_Pressure | The pressure at which fuel is supplied to the engine, critical for proper combustion. | bar or kilopascals (kPa) |
-| Coolant_Pressure | The pressure of the engine coolant, affecting engine temperature regulation. | bar or kilopascals (kPa) |
-| Lub_Oil_Temperature | The temperature of the lubricating oil, which impacts viscosity and engine performance. | degrees Celsius (°C) |
-| Coolant_Temperature | The temperature of the engine coolant, crucial for preventing overheating. | degrees Celsius (°C) |
-| Engine_Condition | A categorical label representing the health of the engine, indicating normal operation or various levels of wear and failure risks. | Categorical (0 = Off/False/Active, 1 = On/True/Faulty) |
+| `Engine_RPM` | The number of revolutions per minute of the engine, indicating engine speed. | Revolutions per Minute (RPM) |
+| `Lub_Oil_Pressure` | The pressure of the lubricating oil in the engine, essential for reducing friction and wear. | bar or kilopascals (kPa) |
+| `Fuel_Pressure` | The pressure at which fuel is supplied to the engine, critical for proper combustion. | bar or kilopascals (kPa) |
+| `Coolant_Pressure` | The pressure of the engine coolant, affecting engine temperature regulation. | bar or kilopascals (kPa) |
+| `Lub_Oil_Temperature` | The temperature of the lubricating oil, which impacts viscosity and engine performance. | degrees Celsius (°C) |
+| `Coolant_Temperature` | The temperature of the engine coolant, crucial for preventing overheating. | degrees Celsius (°C) |
+| `Engine_Condition` | A categorical label representing the health of the engine, indicating normal operation or various levels of wear and failure risks. | Categorical (0 = Off/False/Active, 1 = On/True/Faulty) |

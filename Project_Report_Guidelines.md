@@ -37,7 +37,7 @@ The Final Submission should include the complete report with the following secti
 - Data Preparation
 - Model Building with Experimentation Tracking
 - Model Deployment
-- Automated Github Actions Workflow
+- Automated GitHub Actions Workflow
 - Output Evaluation
 - Actionable Insights and Recommendations
 
@@ -53,9 +53,9 @@ The Final Submission should include the complete report with the following secti
 
 ---
 
-## What an Inadequate Project Report Looks Like
+## What an Inadequate Project Report Looks Like?
 
-1. Filled with Python code and little to no explanation or interpretation.
+1. Filled with Python codes and little to no explanation or interpretation.
 2. Contains one-line answers without logic, insights, or explanations.
 3. Directly exporting a Jupyter Notebook as a PDF and submitting it as the report.
 
@@ -65,7 +65,7 @@ The Final Submission should include the complete report with the following secti
 
 - Follow all guidelines provided by the Program Office.
 - Keep the report professional and concise (ideally within 25 pages).
-- Place all raw code and raw outputs in the Appendix, not in the main body.
+- Place all raw codes and raw outputs in the Appendix, not in the main body.
 - Present EDA results in a clean tabular form for clarity and comparison.
 - Ensure tables, figures, and charts are properly labeled with legible axis labels, legends, and titles.
 - Show all numbers up to 2 decimal places (unless otherwise required).
