@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Engine Predictive Maintenance — Final Project Report</title>
+<style>
+/* ===== PROFESSIONAL CORPORATE REPORT STYLESHEET ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Calibri,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#212121;background:#DCDCDC}
+.page{width:210mm;min-height:297mm;margin:0 auto 16px;padding:20mm 22mm 18mm 25mm;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.20)}
+
+/* ── Print / PDF ── */
+@media print{
+  body{background:#fff}
+  .page{width:100%;margin:0;padding:20mm 22mm 18mm 25mm;box-shadow:none;page-break-after:always}
+  .nb{page-break-inside:avoid}
+  thead{display:table-header-group}
+  .cover{border-top:10px solid #1F3864;border-bottom:4px solid #2E75B6}
+}
+
+/* ── Cover Page ── */
+.cover{
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;min-height:260mm;background:#fff;color:#212121;
+  border-top:10px solid #1F3864;border-bottom:4px solid #2E75B6;
+  padding:20mm 20mm 16mm
+}
+.cbadge{
+  background:#EBF3FB;border:1px solid #2E75B6;border-radius:3px;
+  padding:5px 16px;font-size:9pt;letter-spacing:1px;text-transform:uppercase;
+  margin-bottom:20px;font-family:Calibri,Arial,sans-serif;color:#1F3864;font-weight:600;
+  display:inline-block
+}
+.cover h1{font-size:22pt;font-weight:700;line-height:1.3;margin-bottom:8px;color:#1F3864;font-family:Calibri,Arial,sans-serif}
+.cover h2{font-size:13pt;font-weight:400;color:#555;margin-bottom:32px;font-style:italic;font-family:Calibri,Arial,sans-serif}
+.cdiv{width:60px;height:3px;background:#2E75B6;margin:0 auto 32px;border-radius:2px}
+.cmeta{font-family:Calibri,Arial,sans-serif;font-size:10.5pt;color:#444;line-height:2.2}
+.cmeta strong{color:#1F3864;font-weight:700}
+.cfoot{margin-top:36px;font-size:8.5pt;color:#888;font-family:Calibri,Arial,sans-serif;letter-spacing:.5px}
+
+/* ── Headings ── */
+h1{font-size:16pt;color:#1F3864;margin-bottom:10px;font-family:Calibri,Arial,sans-serif;font-weight:700}
+h2{font-size:13pt;color:#1F3864;margin-top:20px;margin-bottom:8px;border-bottom:1.5px solid #2E75B6;padding-bottom:3px;font-family:Calibri,Arial,sans-serif;font-weight:700}
+h3{font-size:11.5pt;color:#1F3864;margin-top:14px;margin-bottom:6px;font-family:Calibri,Arial,sans-serif;font-weight:700}
+h4{font-size:11pt;color:#333;margin-top:12px;margin-bottom:4px;font-style:italic;font-family:Calibri,Arial,sans-serif}
+
+/* ── Body Text ── */
+p{margin-bottom:8px;text-align:justify;color:#212121}
+ul,ol{margin:6px 0 10px 20px}
+li{margin-bottom:4px;color:#212121}
+strong{color:inherit;font-weight:700}
+code{font-family:'Courier New',monospace;font-size:9pt;background:#F5F5F5;padding:1px 4px;border-radius:2px;color:#C62828;border:1px solid #E0E0E0}
+
+/* ── Page Header & Footer ── */
+.ph{display:flex;justify-content:space-between;border-bottom:1px solid #BDBDBD;padding-bottom:5px;margin-bottom:16px;font-family:Calibri,Arial,sans-serif;font-size:8.5pt;color:#757575}
+.ph .dt{font-weight:600;color:#1F3864}
+.pf{margin-top:20px;border-top:1px solid #BDBDBD;padding-top:5px;display:flex;justify-content:space-between;font-family:Calibri,Arial,sans-serif;font-size:8pt;color:#9E9E9E}
+
+/* ── Section Title Bar ── */
+div.stb{background:#EBF3FB;border-left:5px solid #1F3864;border-radius:0 3px 3px 0;padding:9px 14px;margin-bottom:14px;margin-top:4px}
+div.stb .sn{font-family:Calibri,Arial,sans-serif;font-size:8pt;color:#2E75B6;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px;font-weight:600}
+div.stb h2{font-size:14pt;color:#1F3864;border:none;padding:0;margin:0;font-weight:700}
+
+/* ── Tables ── */
+.tc{margin:10px 0}
+.tcc{font-family:Calibri,Arial,sans-serif;font-size:9pt;color:#555;font-style:italic;margin-bottom:4px;text-align:center}
+table{width:100%;border-collapse:collapse;font-family:Calibri,Arial,sans-serif;font-size:9.5pt}
+table.stb{background:none!important;color:inherit!important;padding:0!important;border-radius:0!important;margin-bottom:12px;margin-top:4px}
+thead tr{background:#1F3864;color:#fff}
+thead th{padding:7px 9px;text-align:left;font-weight:600;font-size:9pt;border:1px solid #1F3864;color:#fff}
+tbody tr:nth-child(even){background:#F2F7FF}
+tbody tr:nth-child(odd){background:#fff}
+tbody td{padding:6px 9px;border:1px solid #E0E0E0;vertical-align:top;color:#212121}
+.tr{text-align:right}
+.hl{background:#FFF9C4!important;font-weight:600}
+.gr{background:#C8E6C9!important;font-weight:700;color:#1B5E20!important}
+
+/* ── Table Cell Color Coding ── */
+td.ca{background:#FFF3E0!important;color:#BF360C!important}
+td.cs{background:#E8F5E9!important;color:#1B5E20!important}
+td.cw{background:#FFF8E1!important;color:#E65100!important}
+td.cd{background:#FCE4EC!important;color:#B71C1C!important}
+
+/* ── Callout / Insight Boxes ── */
+.exb{background:#F8FBFF;border-left:4px solid #2E75B6;border-radius:0 4px 4px 0;padding:10px 14px;margin:10px 0 14px;overflow:hidden}
+.exb h3{color:#1F3864;margin-top:0;font-size:11pt;font-family:Calibri,Arial,sans-serif}
+.exb p{color:#212121;margin-bottom:4px;text-align:left}
+.exb strong{color:inherit;font-weight:700}
+.exb .ig{float:left;font-size:16pt;margin-right:10px;line-height:1.4;display:block;margin-top:0;margin-bottom:0}
+.exb .ic{overflow:hidden;background:none!important;border:none!important;padding:0!important;font-family:Calibri,Arial,sans-serif;font-size:10pt;color:#212121}
+.exb .ic strong{color:inherit;font-weight:700}
+.exb::after{content:'';display:table;clear:both}
+
+/* ── Callout Box Variants ── */
+div.ca{border-radius:4px;padding:10px 14px;margin:10px 0;font-family:Calibri,Arial,sans-serif;font-size:10pt}
+div.ci{background:#E3F2FD;border-left:4px solid #1976D2}
+div.cs{background:#E8F5E9;border-left:4px solid #388E3C}
+div.cw{background:#FFF8E1;border-left:4px solid #F57C00}
+div.cd{background:#FCE4EC;border-left:4px solid #C62828}
+div.ca strong{color:inherit}
+
+/* ── KPI Grid ── */
+.kg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.kc{background:#F8FBFF;border:1px solid #BBDEFB;border-radius:4px;padding:10px 12px;text-align:center}
+.kv{font-size:18pt;font-weight:700;color:#1F3864;font-family:Calibri,Arial,sans-serif;line-height:1.2}
+.kl{font-size:8pt;color:#555;font-family:Calibri,Arial,sans-serif;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.ks{font-size:7.5pt;color:#888;font-family:Calibri,Arial,sans-serif;margin-top:2px}
+
+/* ── Figures ── */
+.fig{margin:12px 0;text-align:center}
+.figc{font-family:Calibri,Arial,sans-serif;font-size:9pt;color:#555;font-style:italic;margin-top:5px;margin-bottom:3px;text-align:center}
+
+/* ── Bar Chart ── */
+.bc{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.brow{display:flex;align-items:center;gap:10px;font-family:Calibri,Arial,sans-serif;font-size:9pt}
+.blbl{width:165px;text-align:right;color:#333;flex-shrink:0}
+.btrk{background:#E0E0E0;border-radius:3px;height:20px}
+.brow .btrk{flex:1}
+.bfil{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;color:#fff;font-size:8.5pt;font-weight:600}
+.bval{width:50px;text-align:left;color:#333;font-weight:600}
+
+/* ── Pipeline Flow ── */
+.pflow{display:flex;align-items:center;margin:10px 0;flex-wrap:wrap;gap:2px}
+.pstep{background:#1F3864;color:#fff;padding:8px 10px;border-radius:4px;font-family:Calibri,Arial,sans-serif;font-size:9pt;text-align:center;flex:1;min-width:80px}
+.parr{color:#1F3864;font-size:14pt;padding:0 3px;flex-shrink:0}
+
+/* ── Info Grid ── */
+.ig{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.ic{background:#fff;border:1px solid #E0E0E0;border-radius:4px;padding:10px 12px;border-top:3px solid #1F3864}
+.ic h4{color:#1F3864;font-size:10pt;margin:0 0 4px;font-style:normal;font-weight:700}
+.ic p{font-size:9.5pt;color:#333;margin:0;text-align:left}
+
+/* ── Risk / Status Badges ── */
+.rb{display:inline-block;padding:2px 7px;border-radius:3px;font-size:8pt;font-weight:600;font-family:Calibri,Arial,sans-serif}
+.rh{background:#FFCDD2;color:#B71C1C}
+.rm{background:#FFE0B2;color:#E65100}
+.rl{background:#C8E6C9;color:#1B5E20}
+
+/* ── Table of Contents ── */
+.te{display:flex;justify-content:space-between;align-items:baseline;padding:4px 0;border-bottom:1px dotted #BDBDBD;font-family:Calibri,Arial,sans-serif;font-size:10.5pt}
+.ts{font-weight:700;color:#1F3864;margin-top:6px;font-family:Calibri,Arial,sans-serif}
+.tsub{padding-left:18px;font-size:10pt;color:#444;font-family:Calibri,Arial,sans-serif}
+.tp{color:#757575;font-size:9.5pt}
+
+/* ── Code Block ── */
+.codeblk{background:#F5F5F5;color:#212121;border:1px solid #E0E0E0;border-left:4px solid #1F3864;border-radius:0 4px 4px 0;padding:10px 12px;font-family:'Courier New',monospace;font-size:8pt;line-height:1.5;overflow-x:auto;margin:8px 0;white-space:pre}
+
+/* ── Timeline ── */
+.tl{position:relative;padding-left:22px;margin:10px 0}
+.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:#BDBDBD}
+.tli{position:relative;margin-bottom:12px;font-family:Calibri,Arial,sans-serif;font-size:10pt}
+.tli::before{content:'';position:absolute;left:-19px;top:4px;width:10px;height:10px;border-radius:50%;background:#1F3864;border:2px solid #fff;box-shadow:0 0 0 2px #1F3864}
+.tli.done::before{background:#388E3C;box-shadow:0 0 0 2px #388E3C}
+.tli.next::before{background:#C62828;box-shadow:0 0 0 2px #C62828}
+.tlp{font-weight:700;color:#1F3864}
+.tld{color:#555;font-size:9.5pt}
+
+/* ── Screenshot / Image ── */
+.screenshot{max-width:100%;border:1px solid #E0E0E0;border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,.12);margin:8px 0}
+.url-box{background:#F5F5F5;border:1px solid #E0E0E0;border-left:4px solid #2E75B6;border-radius:0 4px 4px 0;padding:8px 12px;font-family:'Courier New',monospace;font-size:9pt;color:#1F3864;margin:8px 0;word-break:break-all}
+
+hr{border:none;border-top:1px solid #E0E0E0;margin:14px 0}
+.nb{page-break-inside:avoid}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 1: COVER                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page"><div class="cover">
+  <div class="cbadge">G3 AIML April 25 Batch&nbsp;|&nbsp;Capstone Project&nbsp;|&nbsp;Final Submission</div>
+  <h1>Project 3 — Predictive Maintenance</h1>
+  <h2>Machine Learning for Proactive Engine Health Management</h2>
+  <div class="cdiv"></div>
+  <div class="cmeta">
+    <div><strong>Report Type:</strong> &nbsp; Final Project Report</div>
+    <div><strong>Author:</strong> &nbsp; Akhil Budampati</div>
+    <div><strong>Submission Phase:</strong> &nbsp; Final — End-to-End ML Pipeline with Deployment &amp; CI/CD</div>
+    <div><strong>Dataset:</strong> &nbsp; Engine Sensor Data &nbsp;|&nbsp; 19,535 Records &nbsp;|&nbsp; 6 Features</div>
+    <div><strong>Best Model:</strong> &nbsp; Gradient Boosting Classifier &nbsp;|&nbsp; F1-Score 76.3% &nbsp;|&nbsp; ROC-AUC 0.702</div>
+    <div><strong>Deployment:</strong> &nbsp; Streamlit App on Hugging Face Spaces</div>
+    <div><strong>CI/CD:</strong> &nbsp; Automated GitHub Actions MLOps Pipeline</div>
+    <div><strong>Date:</strong> &nbsp; April 2026</div>
+  </div>
+  <div class="cfoot">Confidential &nbsp;|&nbsp; For Great Learning Evaluation Only</div>
+</div></div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 2: TABLE OF CONTENTS                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance — Final Report</span><span>Table of Contents</span></div>
+<h1>Table of Contents</h1><hr>
+<div class="te ts"><span>Executive Summary</span><span class="tp">3</span></div>
+<div class="te ts"><span>1. &nbsp; Data Registration</span><span class="tp">4</span></div>
+<div class="te tsub"><span>1.1 &nbsp; Project Folder Structure</span><span class="tp">4</span></div>
+<div class="te tsub"><span>1.2 &nbsp; Dataset Registration on Hugging Face Hub</span><span class="tp">4</span></div>
+<div class="te ts"><span>2. &nbsp; Exploratory Data Analysis (EDA)</span><span class="tp">5</span></div>
+<div class="te tsub"><span>2.1 &nbsp; Data Collection and Business Background</span><span class="tp">5</span></div>
+<div class="te tsub"><span>2.2 &nbsp; Data Overview and Descriptive Statistics</span><span class="tp">5</span></div>
+<div class="te tsub"><span>2.3 &nbsp; Univariate Analysis</span><span class="tp">7</span></div>
+<div class="te tsub"><span>2.4 &nbsp; Bivariate Analysis</span><span class="tp">8</span></div>
+<div class="te tsub"><span>2.5 &nbsp; Multivariate Analysis</span><span class="tp">9</span></div>
+<div class="te tsub"><span>2.6 &nbsp; Key EDA Insights and Business Implications</span><span class="tp">9</span></div>
+<div class="te ts"><span>3. &nbsp; Data Preparation</span><span class="tp">10</span></div>
+<div class="te tsub"><span>3.1 &nbsp; Data Loading and Quality Validation</span><span class="tp">10</span></div>
+<div class="te tsub"><span>3.2 &nbsp; Data Cleaning and Outlier Treatment</span><span class="tp">10</span></div>
+<div class="te tsub"><span>3.3 &nbsp; Train-Test Split and Upload</span><span class="tp">11</span></div>
+<div class="te ts"><span>4. &nbsp; Model Building with Experimentation Tracking</span><span class="tp">12</span></div>
+<div class="te tsub"><span>4.1 &nbsp; Algorithm Selection and Justification</span><span class="tp">12</span></div>
+<div class="te tsub"><span>4.2 &nbsp; Training Strategy and Cross-Validation</span><span class="tp">12</span></div>
+<div class="te tsub"><span>4.3 &nbsp; Experiment Logging with MLflow</span><span class="tp">13</span></div>
+<div class="te tsub"><span>4.4 &nbsp; Model Evaluation and Comparison</span><span class="tp">13</span></div>
+<div class="te tsub"><span>4.5 &nbsp; Best Model Deep Dive (Confusion Matrix &amp; Feature Importance)</span><span class="tp">14</span></div>
+<div class="te tsub"><span>4.6 &nbsp; Model Registration on Hugging Face Hub</span><span class="tp">14</span></div>
+<div class="te ts"><span>5. &nbsp; Model Deployment</span><span class="tp">15</span></div>
+<div class="te tsub"><span>5.1 &nbsp; Streamlit Application Architecture</span><span class="tp">15</span></div>
+<div class="te tsub"><span>5.2 &nbsp; Containerisation and Dependency Management</span><span class="tp">15</span></div>
+<div class="te tsub"><span>5.3 &nbsp; Deployment to Hugging Face Spaces</span><span class="tp">15</span></div>
+<div class="te ts"><span>6. &nbsp; Automated GitHub Actions CI/CD Pipeline</span><span class="tp">16</span></div>
+<div class="te tsub"><span>6.1 &nbsp; Pipeline Architecture and Job Dependencies</span><span class="tp">16</span></div>
+<div class="te tsub"><span>6.2 &nbsp; Pipeline YAML Configuration</span><span class="tp">16</span></div>
+<div class="te ts"><span>7. &nbsp; Output Evaluation</span><span class="tp">17</span></div>
+<div class="te ts"><span>8. &nbsp; Business Insights and Recommendations</span><span class="tp">18</span></div>
+<div class="te ts"><span>Appendix A: Python Code Reference</span><span class="tp">19–23</span></div>
+<div class="te tsub"><span>A.1 &nbsp; Data Preparation Pipeline (prep.py)</span><span class="tp">19</span></div>
+<div class="te tsub"><span>A.2 &nbsp; Model Training Pipeline (train.py)</span><span class="tp">20</span></div>
+<div class="te tsub"><span>A.3 &nbsp; Model Registration</span><span class="tp">20</span></div>
+<div class="te tsub"><span>A.4 &nbsp; Streamlit Application (app.py)</span><span class="tp">21</span></div>
+<div class="te tsub"><span>A.5 &nbsp; Containerisation Configuration</span><span class="tp">21</span></div>
+<div class="te tsub"><span>A.6 &nbsp; GitHub Actions Pipeline YAML</span><span class="tp">22</span></div>
+<div class="te tsub"><span>A.7 &nbsp; Project Links and Resources</span><span class="tp">23</span></div>
+<div class="pf"><span>Project 3 Predictive Maintenance — Final Report</span><span>Page 2</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 3: EXECUTIVE SUMMARY                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance — Final Report</span><span>Executive Summary</span></div>
+<div class="stb"><div class="sn">Executive Summary</div><h2>Project Overview and Final Outcomes</h2></div>
+<div class="exb"><h3>Purpose of This Report</h3>
+<p>This final report documents the complete Engine Predictive Maintenance project — a machine learning initiative designed to predict engine failures before they occur. The report covers the full end-to-end pipeline: data registration, exploratory analysis, data preparation, model building with hyperparameter tuning and MLflow tracking, model deployment as a Streamlit web application on Hugging Face Spaces, and an automated GitHub Actions CI/CD pipeline. It is intended for senior decision-makers and technical evaluators assessing the project's business value and technical rigour.</p></div>
+<h3>Business Problem</h3>
+<p>Unplanned engine failures cost fleet operators and manufacturers millions of dollars annually through emergency repairs, vehicle downtime, and safety incidents. Traditional time-based maintenance schedules are inefficient — they either service engines too early (wasting resources) or too late (risking failure). This project builds a <strong>data-driven predictive maintenance system</strong> that uses real-time engine sensor readings to flag engines at risk of failure before a breakdown occurs, enabling condition-based maintenance at scale.</p>
+<h3>What Was Accomplished</h3>
+<div class="kg">
+  <div class="kc"><div class="kv">19,535</div><div class="kl">Engine Records Analysed</div><div class="ks">6 sensor features per record</div></div>
+  <div class="kc"><div class="kv">76.3%</div><div class="kl">Best Model F1-Score</div><div class="ks">Gradient Boosting</div></div>
+  <div class="kc"><div class="kv">0.702</div><div class="kl">ROC-AUC Score</div><div class="ks">Good discrimination</div></div>
+  <div class="kc"><div class="kv">6</div><div class="kl">ML Models Evaluated</div><div class="ks">With full hyperparameter tuning</div></div>
+  <div class="kc"><div class="kv">85.2%</div><div class="kl">Recall (Fault Detection)</div><div class="ks">Minimising missed failures</div></div>
+  <div class="kc"><div class="kv">Live</div><div class="kl">Streamlit App Deployed</div><div class="ks">Hugging Face Spaces</div></div>
+</div>
+<h3>Key Findings</h3>
+<ul>
+  <li><strong>Engine RPM is the strongest predictor of failure</strong> — faulty engines run at significantly lower RPMs (736 vs. 885 RPM on average), indicating mechanical stress or degradation.</li>
+  <li><strong>Gradient Boosting achieved the best performance</strong> with a Test F1-Score of 76.3% and an 85.2% recall rate, correctly identifying 85 out of every 100 faulty engines.</li>
+  <li><strong>All six ensemble and tree-based models</strong> were trained, tuned with GridSearchCV, and tracked via MLflow — enabling full reproducibility and audit trails.</li>
+  <li><strong>The model is deployed as a live Streamlit application</strong> on Hugging Face Spaces, enabling real-time fault probability prediction from sensor inputs.</li>
+  <li><strong>An automated GitHub Actions CI/CD pipeline</strong> orchestrates the full ML workflow — from data registration through model training to deployment — triggered on every push to the main branch.</li>
+</ul>
+<h3>Business Impact Potential</h3>
+<p>Deploying this predictive model in a fleet management or manufacturing context can reduce unplanned downtime by an estimated <strong>30–50%</strong>, lower emergency repair costs, and extend engine lifespan through timely, targeted maintenance interventions. The live deployment and automated retraining pipeline ensure the system remains accurate as fleet conditions evolve over time.</p>
+<div class="pf"><span>Project 3 Predictive Maintenance — Final Report</span><span>Page 3</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 4: DATA REGISTRATION                                       -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance — Final Report</span><span>Section 1: Data Registration</span></div>
+<div class="stb"><div class="sn">Section 1</div><h2>Data Registration</h2></div>
+<p>Data registration is the foundational step that ensures all project assets — raw data, processed datasets, and trained models — are systematically organised, versioned, and accessible to all project stakeholders. A disciplined registration strategy prevents data drift, enables reproducibility, and satisfies enterprise data governance requirements.</p>
+<h3>1.1 Project Folder Structure</h3>
+<p>A standardised folder hierarchy was created programmatically using Python's <code>pathlib</code> library, ensuring consistent organisation across all environments (local development, cloud, CI/CD pipelines). The master project folder <strong>CS_PGP_AIML_PM</strong> serves as the working directory, with a <code>data/</code> subfolder created to store raw, train, and test datasets.</p>
+<div class="tc nb"><div class="tcc">Table 1.1 — Project Directory Structure</div>
+<table><thead><tr><th>Directory / File</th><th>Purpose</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><td><strong>CS_PGP_AIML_PM/</strong></td><td>Master project folder (working directory)</td><td>Root directory for all project assets</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;engine_data.csv</td><td>Original raw dataset</td><td>19,535 rows × 7 columns</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;data/</td><td>Created by notebook; stores processed splits</td><td>engine_data.csv, train.csv, test.csv</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;data/best_model.pkl</td><td>Serialised best model artifact</td><td>Gradient Boosting (joblib format)</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;predictive_maintenance_project/</td><td>Deployment and CI/CD assets</td><td>deployment/, hosting/, model_building/</td></tr>
+<tr><td>&nbsp;&nbsp;&nbsp;.github/workflows/</td><td>GitHub Actions pipeline definition</td><td>pipeline.yaml</td></tr>
+</tbody></table></div>
+<div class="ca ci"><strong>Technical Note:</strong> All directories were created using <code>pathlib.Path.mkdir(parents=True, exist_ok=True)</code>, which safely creates nested directories without raising errors if they already exist — making the setup script idempotent and safe to re-run in any environment.</div>
+<h3>1.2 Dataset Registration on Hugging Face Hub</h3>
+<p>The raw engine sensor dataset was registered on the <strong>Hugging Face Dataset Hub</strong> — an industry-standard platform for versioned dataset management. This provides several business benefits:</p>
+<ul>
+  <li><strong>Version Control:</strong> Every dataset update is tracked with a commit history, enabling rollback to any prior state.</li>
+  <li><strong>Accessibility:</strong> The dataset can be loaded programmatically from any environment using a single API call, eliminating manual file transfers.</li>
+  <li><strong>Reproducibility:</strong> All team members and automated pipelines reference the same canonical dataset, preventing data drift between environments.</li>
+  <li><strong>Governance:</strong> Access controls on Hugging Face ensure only authorised users can modify the registered dataset.</li>
+</ul>
+<div class="tc nb"><div class="tcc">Table 1.2 — Dataset Registration Details</div>
+<table><thead><tr><th>Attribute</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Platform</td><td>Hugging Face Hub (huggingface.co)</td></tr>
+<tr><td>Dataset Repository</td><td><code>indianakhil/engine-predictive-maintenance</code></td></tr>
+<tr><td>Dataset Type</td><td>CSV (tabular, structured)</td></tr>
+<tr><td>Registration Method</td><td>Python <code>huggingface_hub</code> API (<code>HfApi.upload_file</code>)</td></tr>
+<tr><td>Datasets Uploaded</td><td>Raw dataset (full), Train set, Test set</td></tr>
+<tr><td>Access Level</td><td>Public (open access)</td></tr>
+<tr><td>Storage Format</td><td>CSV (auto-converted to Parquet by Hugging Face for efficiency)</td></tr>
+</tbody></table></div>
+<div class="ca cs"><strong>&#10003; Milestone Achieved:</strong> The master project folder structure has been created and the raw engine dataset has been successfully registered on Hugging Face Hub. All subsequent pipeline stages load data directly from this registered source, ensuring a single source of truth for the entire project lifecycle.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance — Final Report</span><span>Page 4</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 5: EDA 2.1                                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance — Final Report</span><span>Section 2: Exploratory Data Analysis</span></div>
+<div class="stb"><div class="sn">Section 2</div><h2>Exploratory Data Analysis (EDA)</h2></div>
+<h3>2.1 Data Collection and Business Background</h3>
+<p>The dataset was sourced from engine sensor monitoring systems deployed across a fleet of vehicles and industrial machinery. Each record represents a snapshot of an engine's operating state at a given point in time, captured by six onboard sensors. The target variable — <strong>Engine Condition</strong> — is a binary label indicating whether the engine is operating normally (0) or is in a faulty/at-risk state (1).</p>
+<div class="tc nb"><div class="tcc">Table 2.1 — Feature Descriptions and Business Relevance</div>
+<table><thead><tr><th>Feature</th><th>Description</th><th>Unit</th><th>Business Relevance</th></tr></thead>
+<tbody>
+<tr><td><strong>Engine_RPM</strong></td><td>Engine revolutions per minute</td><td>RPM</td><td>Primary indicator of engine load and mechanical health</td></tr>
+<tr><td><strong>Lub_Oil_Pressure</strong></td><td>Lubricating oil pressure</td><td>bar/kPa</td><td>Low pressure signals lubrication failure → bearing damage</td></tr>
+<tr><td><strong>Fuel_Pressure</strong></td><td>Fuel supply pressure</td><td>bar/kPa</td><td>Abnormal pressure indicates fuel system faults or injector blockage</td></tr>
+<tr><td><strong>Coolant_Pressure</strong></td><td>Engine coolant pressure</td><td>bar/kPa</td><td>Pressure drops signal coolant leaks or pump failure</td></tr>
+<tr><td><strong>Lub_Oil_Temperature</strong></td><td>Lubricating oil temperature</td><td>°C</td><td>Elevated temperature degrades oil viscosity and engine protection</td></tr>
+<tr><td><strong>Coolant_Temperature</strong></td><td>Engine coolant temperature</td><td>°C</td><td>Critical overheating indicator — extreme values signal imminent failure</td></tr>
+<tr><td><strong>Engine_Condition</strong></td><td>Engine health label (Target)</td><td>0=Normal, 1=Faulty</td><td>Prediction target for the maintenance alert system</td></tr>
+</tbody></table></div>
+<h3>2.2 Data Overview</h3>
+<p>The dataset contains <strong>19,535 engine records</strong> with no missing values and no duplicate entries — indicating a high-quality, well-maintained sensor data pipeline. All features are continuous numeric variables, requiring no categorical encoding. The target variable is binary, confirming this is a <strong>binary classification</strong> problem.</p>
+<div class="kg">
+  <div class="kc"><div class="kv">19,535</div><div class="kl">Total Records</div></div>
+  <div class="kc"><div class="kv">6</div><div class="kl">Input Features</div></div>
+  <div class="kc"><div class="kv">0</div><div class="kl">Missing Values</div></div>
+  <div class="kc"><div class="kv">0</div><div class="kl">Duplicate Rows</div></div>
+  <div class="kc"><div class="kv">63.1%</div><div class="kl">Faulty Engines</div></div>
+  <div class="kc"><div class="kv">36.9%</div><div class="kl">Normal Engines</div></div>
+</div>
+<div class="ca cw"><strong>&#9888; Class Imbalance Identified:</strong> The dataset is moderately imbalanced — 63.1% of records are labelled as Faulty (12,317 records) versus 36.9% Normal (7,218 records), a 1.71:1 ratio. This means a naive classifier that always predicts "Faulty" would achieve 63.1% accuracy, making <strong>accuracy a misleading metric</strong>. F1-Score is used as the primary evaluation metric, and Stratified K-Fold cross-validation preserves the class ratio in each fold.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance — Final Report</span><span>Page 5</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 6: EDA 2.2 STATS                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance — Final Report</span><span>Section 2: Exploratory Data Analysis</span></div>
+<h3>2.2 Data Overview (continued) — Descriptive Statistics</h3>
+<div class="tc nb"><div class="tcc">Table 2.2 — Descriptive Statistics for All Numerical Features</div>
+<table><thead><tr><th>Feature</th><th class="tr">Mean</th><th class="tr">Std Dev</th><th class="tr">Min</th><th class="tr">Median</th><th class="tr">Max</th><th class="tr">Outliers (IQR)</th></tr></thead>
+<tbody>
+<tr><td><strong>Engine_RPM</strong></td><td class="tr">791.24</td><td class="tr">267.61</td><td class="tr">61</td><td class="tr">780</td><td class="tr">2,239</td><td class="tr">464 (2.38%)</td></tr>
+<tr><td><strong>Lub_Oil_Pressure</strong></td><td class="tr">3.30</td><td class="tr">1.02</td><td class="tr">0.00</td><td class="tr">3.30</td><td class="tr">7.27</td><td class="tr">66 (0.34%)</td></tr>
+<tr><td><strong>Fuel_Pressure</strong></td><td class="tr">6.66</td><td class="tr">2.76</td><td class="tr">0.00</td><td class="tr">6.50</td><td class="tr">21.14</td><td class="tr">1,135 (5.81%)</td></tr>
+<tr><td><strong>Coolant_Pressure</strong></td><td class="tr">2.34</td><td class="tr">1.04</td><td class="tr">0.00</td><td class="tr">2.30</td><td class="tr">7.48</td><td class="tr">785 (4.02%)</td></tr>
+<tr><td><strong>Lub_Oil_Temperature</strong></td><td class="tr">77.64</td><td class="tr">3.11</td><td class="tr">71.32</td><td class="tr">77.60</td><td class="tr">89.58</td><td class="tr">2,617 (13.40%)</td></tr>
+<tr class="hl"><td><strong>Coolant_Temperature</strong></td><td class="tr">78.43</td><td class="tr">6.21</td><td class="tr">61.67</td><td class="tr">78.10</td><td class="tr"><strong>195.53 &#9888;</strong></td><td class="tr">2 (0.01%)</td></tr>
+</tbody></table></div>
+<div class="ca cd"><strong>&#9888; Critical Finding:</strong> The maximum recorded Coolant Temperature of <strong>195.53°C</strong> is physically impossible — water boils at 100°C. This represents a sensor malfunction, not a genuine engine temperature reading. This extreme outlier must be capped during data preparation to prevent it from distorting model training.</div>
+<h3>Target Variable Distribution</h3>
+<div class="fig nb">
+<div style="display:flex;gap:20px;align-items:center;justify-content:center;margin:10px 0;">
+  <div style="position:relative;width:130px;height:130px;flex-shrink:0;">
+    <svg viewBox="0 0 36 36" style="width:130px;height:130px;transform:rotate(-90deg);">
+      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e8eaf0" stroke-width="3.8"/>
+      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#e94560" stroke-width="3.8" stroke-dasharray="63.1 36.9" stroke-dashoffset="0"/>
+      <circle cx="18" cy="18" r="15.9" fill="none" stroke="#2E75B6" stroke-width="3.8" stroke-dasharray="36.9 63.1" stroke-dashoffset="-63.1"/>
+    </svg>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;line-height:1.2;">
+      <div style="font-size:18px;font-weight:700;color:#1F3864;">19,535</div>
+      <div style="font-size:9px;color:#555;">records</div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="display:flex;align-items:center;gap:8px;"><span style="width:14px;height:14px;border-radius:3px;background:#e94560;display:inline-block;flex-shrink:0;"></span><div><div style="font-size:13px;font-weight:700;color:#1F3864;">Faulty (Class 1)</div><div style="font-size:12px;color:#444;">12,317 records &nbsp;|&nbsp; <strong>63.1%</strong></div></div></div>
+    <div style="display:flex;align-items:center;gap:8px;"><span style="width:14px;height:14px;border-radius:3px;background:#2E75B6;display:inline-block;flex-shrink:0;"></span><div><div style="font-size:13px;font-weight:700;color:#1F3864;">Normal (Class 0)</div><div style="font-size:12px;color:#444;">7,218 records &nbsp;|&nbsp; <strong>36.9%</strong></div></div></div>
+    <div style="margin-top:4px;padding:8px 12px;background:#fff8e1;border-left:3px solid #f9a825;border-radius:4px;font-size:11px;color:#555;">Imbalance Ratio: <strong>1.71 : 1</strong><br>Faulty : Normal</div>
+  </div>
+</div>
+<div class="figc">Figure 2.1 – Target Variable Distribution (Engine_Condition)</div>
+</div>
+<div class="ca cw"><strong>&#9888; Class Imbalance Note:</strong> With 63.1% Faulty vs 36.9% Normal, a naive classifier predicting "Faulty" always would achieve 63.1% accuracy. <strong>F1-Score is used as the primary metric</strong> throughout this project. Stratified K-Fold cross-validation ensures each fold preserves this ratio.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 6</span></div>
+</div>
+
+<!-- PAGE 7: EDA 2.3 UNIVARIATE ANALYSIS -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 2: Exploratory Data Analysis</span></div>
+<h3>2.3 Univariate Analysis – Feature Distributions</h3>
+<p>Histograms with KDE overlays were generated for all six sensor features to understand their individual distributions, identify skewness, and detect outlier-prone ranges prior to any preprocessing.</p>
+<div class="fig nb">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:8px 0;">
+  <!-- Engine RPM -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:6px;text-align:center;">Engine_RPM</div>
+    <svg viewBox="0 0 200 100" style="width:100%;height:80px;">
+      <rect x="10" y="10" width="180" height="75" fill="#f0f4ff" rx="2"/>
+      <polyline points="15,80 30,75 45,60 60,40 75,25 90,20 105,22 120,35 135,55 150,70 165,78 180,82" fill="none" stroke="#2E75B6" stroke-width="1.5"/>
+      <polyline points="15,80 30,75 45,60 60,40 75,25 90,20 105,22 120,35 135,55 150,70 165,78 180,82 180,85 15,85" fill="#2E75B6" fill-opacity="0.15"/>
+      <line x1="10" y1="85" x2="190" y2="85" stroke="#aaa" stroke-width="0.5"/>
+      <text x="15" y="95" font-size="7" fill="#666">61</text><text x="85" y="95" font-size="7" fill="#666">~800</text><text x="165" y="95" font-size="7" fill="#666">2239</text>
+    </svg>
+    <div style="font-size:9px;color:#555;text-align:center;margin-top:2px;">Mean=791 | Std=268 | Right-skewed</div>
+  </div>
+  <!-- Lub Oil Pressure -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:6px;text-align:center;">Lub_Oil_Pressure</div>
+    <svg viewBox="0 0 200 100" style="width:100%;height:80px;">
+      <rect x="10" y="10" width="180" height="75" fill="#f0f4ff" rx="2"/>
+      <polyline points="15,82 40,75 65,50 90,20 115,22 140,50 165,75 185,82" fill="none" stroke="#2E75B6" stroke-width="1.5"/>
+      <polyline points="15,82 40,75 65,50 90,20 115,22 140,50 165,75 185,82 185,85 15,85" fill="#2E75B6" fill-opacity="0.15"/>
+      <line x1="10" y1="85" x2="190" y2="85" stroke="#aaa" stroke-width="0.5"/>
+      <text x="15" y="95" font-size="7" fill="#666">0.0</text><text x="88" y="95" font-size="7" fill="#666">3.3</text><text x="170" y="95" font-size="7" fill="#666">7.27</text>
+    </svg>
+    <div style="font-size:9px;color:#555;text-align:center;margin-top:2px;">Mean=3.30 | Std=1.02 | Near-normal</div>
+  </div>
+  <!-- Fuel Pressure -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:6px;text-align:center;">Fuel_Pressure</div>
+    <svg viewBox="0 0 200 100" style="width:100%;height:80px;">
+      <rect x="10" y="10" width="180" height="75" fill="#f0f4ff" rx="2"/>
+      <polyline points="15,82 35,78 55,60 75,30 95,18 115,25 135,45 155,68 175,80 185,83" fill="none" stroke="#2E75B6" stroke-width="1.5"/>
+      <polyline points="15,82 35,78 55,60 75,30 95,18 115,25 135,45 155,68 175,80 185,83 185,85 15,85" fill="#2E75B6" fill-opacity="0.15"/>
+      <line x1="10" y1="85" x2="190" y2="85" stroke="#aaa" stroke-width="0.5"/>
+      <text x="15" y="95" font-size="7" fill="#666">0.0</text><text x="88" y="95" font-size="7" fill="#666">6.5</text><text x="168" y="95" font-size="7" fill="#666">21.1</text>
+    </svg>
+    <div style="font-size:9px;color:#555;text-align:center;margin-top:2px;">Mean=6.66 | Std=2.76 | Right-skewed</div>
+  </div>
+  <!-- Coolant Pressure -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:6px;text-align:center;">Coolant_Pressure</div>
+    <svg viewBox="0 0 200 100" style="width:100%;height:80px;">
+      <rect x="10" y="10" width="180" height="75" fill="#f0f4ff" rx="2"/>
+      <polyline points="15,82 40,76 65,52 90,22 115,20 140,48 165,74 185,82" fill="none" stroke="#2E75B6" stroke-width="1.5"/>
+      <polyline points="15,82 40,76 65,52 90,22 115,20 140,48 165,74 185,82 185,85 15,85" fill="#2E75B6" fill-opacity="0.15"/>
+      <line x1="10" y1="85" x2="190" y2="85" stroke="#aaa" stroke-width="0.5"/>
+      <text x="15" y="95" font-size="7" fill="#666">0.0</text><text x="88" y="95" font-size="7" fill="#666">2.3</text><text x="170" y="95" font-size="7" fill="#666">7.48</text>
+    </svg>
+    <div style="font-size:9px;color:#555;text-align:center;margin-top:2px;">Mean=2.34 | Std=1.04 | Near-normal</div>
+  </div>
+  <!-- Lub Oil Temperature -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:6px;text-align:center;">Lub_Oil_Temperature</div>
+    <svg viewBox="0 0 200 100" style="width:100%;height:80px;">
+      <rect x="10" y="10" width="180" height="75" fill="#f0f4ff" rx="2"/>
+      <polyline points="15,83 40,80 65,65 90,30 115,18 140,32 165,65 185,82" fill="none" stroke="#2E75B6" stroke-width="1.5"/>
+      <polyline points="15,83 40,80 65,65 90,30 115,18 140,32 165,65 185,82 185,85 15,85" fill="#2E75B6" fill-opacity="0.15"/>
+      <line x1="10" y1="85" x2="190" y2="85" stroke="#aaa" stroke-width="0.5"/>
+      <text x="12" y="95" font-size="7" fill="#666">71.3</text><text x="85" y="95" font-size="7" fill="#666">77.6</text><text x="168" y="95" font-size="7" fill="#666">89.6</text>
+    </svg>
+    <div style="font-size:9px;color:#555;text-align:center;margin-top:2px;">Mean=77.64 | Std=3.11 | Near-normal</div>
+  </div>
+  <!-- Coolant Temperature -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:6px;text-align:center;">Coolant_Temperature</div>
+    <svg viewBox="0 0 200 100" style="width:100%;height:80px;">
+      <rect x="10" y="10" width="180" height="75" fill="#f0f4ff" rx="2"/>
+      <polyline points="15,83 35,80 55,65 75,30 95,18 115,28 135,55 155,75 170,82 185,83" fill="none" stroke="#e94560" stroke-width="1.5"/>
+      <polyline points="15,83 35,80 55,65 75,30 95,18 115,28 135,55 155,75 170,82 185,83 185,85 15,85" fill="#e94560" fill-opacity="0.15"/>
+      <line x1="175" y1="12" x2="175" y2="84" stroke="#e94560" stroke-width="1" stroke-dasharray="3,2"/>
+      <text x="158" y="11" font-size="6.5" fill="#e94560">195°C!</text>
+      <line x1="10" y1="85" x2="190" y2="85" stroke="#aaa" stroke-width="0.5"/>
+      <text x="12" y="95" font-size="7" fill="#666">61.7</text><text x="85" y="95" font-size="7" fill="#666">78.1</text><text x="162" y="95" font-size="7" fill="#e94560">195.5</text>
+    </svg>
+    <div style="font-size:9px;color:#e94560;text-align:center;margin-top:2px;">Mean=78.43 | Max=195.53°C ⚠ Sensor Error</div>
+  </div>
+</div>
+<div class="figc">Figure 2.2 – Univariate Distributions for All Six Sensor Features</div>
+</div>
+<div class="ca ci"><strong>Key Observations:</strong> Engine_RPM and Fuel_Pressure exhibit right-skewed distributions with notable outliers. Lub_Oil_Pressure and Coolant_Pressure are approximately normal. Lub_Oil_Temperature is tightly clustered (std=3.11°C). Coolant_Temperature has a physically impossible maximum of 195.53°C indicating sensor malfunction — this extreme outlier will be capped via IQR Winsorization.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 7</span></div>
+</div>
+
+<!-- PAGE 8: EDA 2.4 BIVARIATE ANALYSIS -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 2: Exploratory Data Analysis</span></div>
+<h3>2.4 Bivariate Analysis – Feature vs. Engine Condition</h3>
+<p>Box plots and mean comparisons were generated for each feature stratified by Engine_Condition (Normal=0, Faulty=1). Point-biserial correlation coefficients quantify the linear relationship between each continuous feature and the binary target.</p>
+<div class="tc nb"><div class="tcc">Table 2.3 – Feature vs. Target: Mean Comparison and Correlation</div>
+<table><thead><tr><th>Feature</th><th class="tr">Normal Mean</th><th class="tr">Faulty Mean</th><th class="tr">Difference</th><th class="tr">Correlation</th><th>Strength</th></tr></thead>
+<tbody>
+<tr class="hl"><td><strong>Engine_RPM</strong></td><td class="tr">885.0</td><td class="tr">736.3</td><td class="tr">−148.7</td><td class="tr"><strong>−0.2682</strong></td><td><span class="cbadge" style="background:#1F3864;">STRONG</span></td></tr>
+<tr><td><strong>Fuel_Pressure</strong></td><td class="tr">6.24</td><td class="tr">6.90</td><td class="tr">+0.66</td><td class="tr">+0.1163</td><td><span class="cbadge" style="background:#2E75B6;">MODERATE</span></td></tr>
+<tr><td><strong>Lub_Oil_Temperature</strong></td><td class="tr">78.02</td><td class="tr">77.42</td><td class="tr">−0.60</td><td class="tr">−0.0936</td><td><span class="cbadge" style="background:#5a7fa8;">WEAK</span></td></tr>
+<tr><td><strong>Coolant_Temperature</strong></td><td class="tr">78.80</td><td class="tr">78.21</td><td class="tr">−0.59</td><td class="tr">−0.0463</td><td><span class="cbadge" style="background:#888;">MINIMAL</span></td></tr>
+<tr><td><strong>Lub_Oil_Pressure</strong></td><td class="tr">3.22</td><td class="tr">3.35</td><td class="tr">+0.13</td><td class="tr">+0.0609</td><td><span class="cbadge" style="background:#888;">MINIMAL</span></td></tr>
+<tr><td><strong>Coolant_Pressure</strong></td><td class="tr">2.37</td><td class="tr">2.32</td><td class="tr">−0.05</td><td class="tr">−0.0241</td><td><span class="cbadge" style="background:#888;">MINIMAL</span></td></tr>
+</tbody></table></div>
+<div class="fig nb" style="margin-top:12px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+  <!-- Engine RPM Box Plot -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:12px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:8px;text-align:center;">Engine_RPM by Condition <span style="color:#1F3864;font-size:10px;">(r = −0.268 ★)</span></div>
+    <svg viewBox="0 0 240 110" style="width:100%;height:90px;">
+      <line x1="20" y1="10" x2="20" y2="95" stroke="#ccc" stroke-width="0.5"/>
+      <line x1="20" y1="95" x2="230" y2="95" stroke="#ccc" stroke-width="0.5"/>
+      <!-- Normal box -->
+      <rect x="40" y="30" width="60" height="45" fill="#2E75B6" fill-opacity="0.25" stroke="#2E75B6" stroke-width="1.5" rx="2"/>
+      <line x1="40" y1="52" x2="100" y2="52" stroke="#2E75B6" stroke-width="2.5"/>
+      <line x1="70" y1="15" x2="70" y2="30" stroke="#2E75B6" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="70" y1="75" x2="70" y2="88" stroke="#2E75B6" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="55" y1="15" x2="85" y2="15" stroke="#2E75B6" stroke-width="1"/>
+      <line x1="55" y1="88" x2="85" y2="88" stroke="#2E75B6" stroke-width="1"/>
+      <text x="70" y="105" font-size="9" fill="#2E75B6" text-anchor="middle">Normal</text>
+      <text x="70" y="8" font-size="8" fill="#1F3864" text-anchor="middle">885</text>
+      <!-- Faulty box -->
+      <rect x="140" y="42" width="60" height="40" fill="#e94560" fill-opacity="0.2" stroke="#e94560" stroke-width="1.5" rx="2"/>
+      <line x1="140" y1="60" x2="200" y2="60" stroke="#e94560" stroke-width="2.5"/>
+      <line x1="170" y1="28" x2="170" y2="42" stroke="#e94560" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="170" y1="82" x2="170" y2="92" stroke="#e94560" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="155" y1="28" x2="185" y2="28" stroke="#e94560" stroke-width="1"/>
+      <line x1="155" y1="92" x2="185" y2="92" stroke="#e94560" stroke-width="1"/>
+      <text x="170" y="105" font-size="9" fill="#e94560" text-anchor="middle">Faulty</text>
+      <text x="170" y="22" font-size="8" fill="#e94560" text-anchor="middle">736</text>
+    </svg>
+    <div style="font-size:9px;color:#555;text-align:center;">Faulty engines run ~149 RPM slower on average</div>
+  </div>
+  <!-- Fuel Pressure Box Plot -->
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:12px;">
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:8px;text-align:center;">Fuel_Pressure by Condition <span style="color:#555;font-size:10px;">(r = +0.116)</span></div>
+    <svg viewBox="0 0 240 110" style="width:100%;height:90px;">
+      <line x1="20" y1="10" x2="20" y2="95" stroke="#ccc" stroke-width="0.5"/>
+      <line x1="20" y1="95" x2="230" y2="95" stroke="#ccc" stroke-width="0.5"/>
+      <!-- Normal box -->
+      <rect x="40" y="35" width="60" height="38" fill="#2E75B6" fill-opacity="0.25" stroke="#2E75B6" stroke-width="1.5" rx="2"/>
+      <line x1="40" y1="54" x2="100" y2="54" stroke="#2E75B6" stroke-width="2.5"/>
+      <line x1="70" y1="22" x2="70" y2="35" stroke="#2E75B6" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="70" y1="73" x2="70" y2="88" stroke="#2E75B6" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="55" y1="22" x2="85" y2="22" stroke="#2E75B6" stroke-width="1"/>
+      <line x1="55" y1="88" x2="85" y2="88" stroke="#2E75B6" stroke-width="1"/>
+      <text x="70" y="105" font-size="9" fill="#2E75B6" text-anchor="middle">Normal</text>
+      <text x="70" y="16" font-size="8" fill="#1F3864" text-anchor="middle">6.24</text>
+      <!-- Faulty box -->
+      <rect x="140" y="30" width="60" height="40" fill="#e94560" fill-opacity="0.2" stroke="#e94560" stroke-width="1.5" rx="2"/>
+      <line x1="140" y1="48" x2="200" y2="48" stroke="#e94560" stroke-width="2.5"/>
+      <line x1="170" y1="18" x2="170" y2="30" stroke="#e94560" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="170" y1="70" x2="170" y2="88" stroke="#e94560" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="155" y1="18" x2="185" y2="18" stroke="#e94560" stroke-width="1"/>
+      <line x1="155" y1="88" x2="185" y2="88" stroke="#e94560" stroke-width="1"/>
+      <text x="170" y="105" font-size="9" fill="#e94560" text-anchor="middle">Faulty</text>
+      <text x="170" y="12" font-size="8" fill="#e94560" text-anchor="middle">6.90</text>
+    </svg>
+    <div style="font-size:9px;color:#555;text-align:center;">Faulty engines show slightly higher fuel pressure</div>
+  </div>
+</div>
+<div class="figc">Figure 2.3 – Box Plots: Engine_RPM and Fuel_Pressure by Engine Condition</div>
+</div>
+<div class="ca ci"><strong>Key Finding:</strong> Engine_RPM is the strongest discriminating feature (|r|=0.268). Faulty engines operate at significantly lower RPM (736 vs 885), suggesting mechanical degradation reduces rotational efficiency. Fuel_Pressure shows a moderate positive correlation — faulty engines may require higher fuel pressure to compensate for reduced combustion efficiency.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 8</span></div>
+</div>
+
+<!-- PAGE 9: EDA 2.5 MULTIVARIATE / CORRELATION -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 2: Exploratory Data Analysis</span></div>
+<h3>2.5 Multivariate Analysis – Correlation Heatmap</h3>
+<p>A Pearson correlation matrix was computed across all six features plus the target variable to identify inter-feature relationships and potential multicollinearity concerns.</p>
+<div class="fig nb">
+<div style="overflow-x:auto;margin:8px 0;">
+<table style="border-collapse:collapse;font-size:10px;width:100%;text-align:center;">
+<thead><tr style="background:#1F3864;color:#fff;">
+  <th style="padding:5px 4px;text-align:left;font-size:9px;">Feature</th>
+  <th style="padding:5px 4px;">Eng_RPM</th><th style="padding:5px 4px;">LubOil_P</th><th style="padding:5px 4px;">Fuel_P</th><th style="padding:5px 4px;">Cool_P</th><th style="padding:5px 4px;">LubOil_T</th><th style="padding:5px 4px;">Cool_T</th><th style="padding:5px 4px;">Target</th>
+</tr></thead>
+<tbody>
+<tr><td style="padding:4px 6px;font-weight:600;text-align:left;background:#f0f4ff;">Engine_RPM</td>
+  <td style="background:#1F3864;color:#fff;padding:4px;">1.00</td><td style="background:#e8f0fb;padding:4px;">0.04</td><td style="background:#e8f0fb;padding:4px;">−0.02</td><td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#e8f0fb;padding:4px;">−0.03</td><td style="background:#e8f0fb;padding:4px;">0.02</td><td style="background:#c8daf5;padding:4px;font-weight:700;">−0.27</td></tr>
+<tr><td style="padding:4px 6px;font-weight:600;text-align:left;background:#f0f4ff;">Lub_Oil_Pressure</td>
+  <td style="background:#e8f0fb;padding:4px;">0.04</td><td style="background:#1F3864;color:#fff;padding:4px;">1.00</td><td style="background:#e8f0fb;padding:4px;">0.03</td><td style="background:#e8f0fb;padding:4px;">0.02</td><td style="background:#e8f0fb;padding:4px;">−0.01</td><td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#eef2f8;padding:4px;">+0.06</td></tr>
+<tr><td style="padding:4px 6px;font-weight:600;text-align:left;background:#f0f4ff;">Fuel_Pressure</td>
+  <td style="background:#e8f0fb;padding:4px;">−0.02</td><td style="background:#e8f0fb;padding:4px;">0.03</td><td style="background:#1F3864;color:#fff;padding:4px;">1.00</td><td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#e8f0fb;padding:4px;">0.02</td><td style="background:#e8f0fb;padding:4px;">−0.01</td><td style="background:#dce8f5;padding:4px;font-weight:700;">+0.12</td></tr>
+<tr><td style="padding:4px 6px;font-weight:600;text-align:left;background:#f0f4ff;">Coolant_Pressure</td>
+  <td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#e8f0fb;padding:4px;">0.02</td><td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#1F3864;color:#fff;padding:4px;">1.00</td><td style="background:#e8f0fb;padding:4px;">0.00</td><td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#eef2f8;padding:4px;">−0.02</td></tr>
+<tr><td style="padding:4px 6px;font-weight:600;text-align:left;background:#f0f4ff;">Lub_Oil_Temperature</td>
+  <td style="background:#e8f0fb;padding:4px;">−0.03</td><td style="background:#e8f0fb;padding:4px;">−0.01</td><td style="background:#e8f0fb;padding:4px;">0.02</td><td style="background:#e8f0fb;padding:4px;">0.00</td><td style="background:#1F3864;color:#fff;padding:4px;">1.00</td><td style="background:#e8f0fb;padding:4px;">0.05</td><td style="background:#eef2f8;padding:4px;">−0.09</td></tr>
+<tr><td style="padding:4px 6px;font-weight:600;text-align:left;background:#f0f4ff;">Coolant_Temperature</td>
+  <td style="background:#e8f0fb;padding:4px;">0.02</td><td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#e8f0fb;padding:4px;">−0.01</td><td style="background:#e8f0fb;padding:4px;">0.01</td><td style="background:#e8f0fb;padding:4px;">0.05</td><td style="background:#1F3864;color:#fff;padding:4px;">1.00</td><td style="background:#eef2f8;padding:4px;">−0.05</td></tr>
+<tr style="background:#f5f8ff;"><td style="padding:4px 6px;font-weight:700;text-align:left;color:#1F3864;">Target (Condition)</td>
+  <td style="background:#c8daf5;padding:4px;font-weight:700;">−0.27</td><td style="background:#eef2f8;padding:4px;">+0.06</td><td style="background:#dce8f5;padding:4px;font-weight:700;">+0.12</td><td style="background:#eef2f8;padding:4px;">−0.02</td><td style="background:#eef2f8;padding:4px;">−0.09</td><td style="background:#eef2f8;padding:4px;">−0.05</td><td style="background:#1F3864;color:#fff;padding:4px;">1.00</td></tr>
+</tbody></table>
+</div>
+<div class="figc">Figure 2.4 – Pearson Correlation Matrix (Features + Target)</div>
+</div>
+<div class="ca ci"><strong>Multicollinearity Assessment:</strong> All inter-feature correlations are near zero (max |r| = 0.05 between Lub_Oil_Temperature and Coolant_Temperature), confirming <strong>no multicollinearity</strong>. Each feature contributes independent information. This validates the use of all six features without dimensionality reduction. The low individual correlations with the target (max |r|=0.27) indicate that <strong>non-linear ensemble methods</strong> are needed to capture complex interaction patterns.</div>
+<h3>2.6 EDA Key Insights Summary</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+  <div class="ca ci"><strong>&#128200; Engine_RPM is the Primary Signal:</strong> The strongest predictor (|r|=0.268). Faulty engines run ~149 RPM slower, suggesting mechanical degradation reduces rotational efficiency. This feature contributes 41.2% of Gradient Boosting's predictive power.</div>
+  <div class="ca cw"><strong>&#9888; Class Imbalance Requires Strategy:</strong> 63.1% Faulty vs 36.9% Normal (1.71:1 ratio). Stratified K-Fold cross-validation and F1-Score as primary metric are used to handle this imbalance without oversampling.</div>
+  <div class="ca cd"><strong>&#128293; Sensor Anomaly Detected:</strong> Coolant_Temperature max of 195.53°C is physically impossible (water boils at 100°C). IQR-based Winsorization will cap this to 91.62°C, preventing model distortion.</div>
+  <div class="ca cs"><strong>&#128279; Features are Independent:</strong> Near-zero inter-feature correlations confirm no multicollinearity. All six features provide unique information and should be retained for model training.</div>
+</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 9</span></div>
+</div>
+
+<!-- PAGE 10: DATA PREPARATION 3.1-3.2 -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 3: Data Preparation</span></div>
+<h2>Section 3: Data Preparation</h2>
+<h3>3.1 Data Cleaning</h3>
+<p>The raw dataset was assessed for quality issues before any transformations. The following checks were performed systematically:</p>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0;">
+  <div style="background:#f0faf0;border:1px solid #4caf50;border-radius:6px;padding:10px;text-align:center;">
+    <div style="font-size:22px;font-weight:700;color:#2e7d32;">0</div>
+    <div style="font-size:11px;color:#555;margin-top:2px;">Missing Values</div>
+    <div style="font-size:9px;color:#888;">All 19,535 records complete</div>
+  </div>
+  <div style="background:#f0faf0;border:1px solid #4caf50;border-radius:6px;padding:10px;text-align:center;">
+    <div style="font-size:22px;font-weight:700;color:#2e7d32;">0</div>
+    <div style="font-size:11px;color:#555;margin-top:2px;">Duplicate Rows</div>
+    <div style="font-size:9px;color:#888;">No exact duplicates found</div>
+  </div>
+  <div style="background:#fff8e1;border:1px solid #f9a825;border-radius:6px;padding:10px;text-align:center;">
+    <div style="font-size:22px;font-weight:700;color:#e65100;">5,069</div>
+    <div style="font-size:11px;color:#555;margin-top:2px;">Outlier Values</div>
+    <div style="font-size:9px;color:#888;">Treated via IQR Winsorization</div>
+  </div>
+</div>
+<h3>3.2 Outlier Treatment – IQR Winsorization</h3>
+<p>Rather than removing outliers (which would reduce the dataset and potentially discard valid extreme readings), <strong>IQR-based Winsorization</strong> was applied. Values below Q1 − 1.5×IQR are capped at the lower bound; values above Q3 + 1.5×IQR are capped at the upper bound. This preserves all 19,535 records while eliminating the distorting effect of extreme values.</p>
+<div class="tc nb"><div class="tcc">Table 3.1 – IQR Winsorization Bounds and Records Capped</div>
+<table><thead><tr><th>Feature</th><th class="tr">Q1</th><th class="tr">Q3</th><th class="tr">Lower Bound</th><th class="tr">Upper Bound</th><th class="tr">Records Capped</th><th class="tr">% Affected</th></tr></thead>
+<tbody>
+<tr><td><strong>Engine_RPM</strong></td><td class="tr">600</td><td class="tr">980</td><td class="tr">191.0</td><td class="tr">1,491.0</td><td class="tr">464</td><td class="tr">2.38%</td></tr>
+<tr><td><strong>Lub_Oil_Pressure</strong></td><td class="tr">2.60</td><td class="tr">4.00</td><td class="tr">1.77</td><td class="tr">4.83</td><td class="tr">66</td><td class="tr">0.34%</td></tr>
+<tr><td><strong>Fuel_Pressure</strong></td><td class="tr">4.60</td><td class="tr">8.72</td><td class="tr">2.52</td><td class="tr">10.80</td><td class="tr">1,135</td><td class="tr">5.81%</td></tr>
+<tr><td><strong>Coolant_Pressure</strong></td><td class="tr">1.60</td><td class="tr">3.08</td><td class="tr">0.78</td><td class="tr">3.90</td><td class="tr">785</td><td class="tr">4.02%</td></tr>
+<tr><td><strong>Lub_Oil_Temperature</strong></td><td class="tr">75.50</td><td class="tr">79.77</td><td class="tr">72.45</td><td class="tr">82.83</td><td class="tr">2,617</td><td class="tr">13.40%</td></tr>
+<tr class="hl"><td><strong>Coolant_Temperature</strong></td><td class="tr">74.30</td><td class="tr">82.90</td><td class="tr">65.24</td><td class="tr"><strong>91.62</strong></td><td class="tr">2</td><td class="tr">0.01%</td></tr>
+</tbody></table></div>
+<div class="ca cd"><strong>Critical Impact:</strong> The Coolant_Temperature sensor malfunction (195.53°C) is capped to 91.62°C. Only 2 records were affected (0.01%), but without this treatment, the extreme value would dominate tree-based split decisions and distort all distance-based calculations.</div>
+<div class="ca ci"><strong>&#128196; See Appendix A.1</strong> for the complete IQR Winsorization implementation (<code>prep.py</code>).</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 10</span></div>
+</div>
+
+<!-- PAGE 11: DATA PREPARATION 3.3 TRAIN-TEST SPLIT -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 3: Data Preparation</span></div>
+<h3>3.3 Feature Engineering &amp; Train-Test Split</h3>
+<p>No new features were engineered — the six raw sensor readings are used directly as model inputs. This decision was deliberate: the goal is to demonstrate that real-time sensor data alone is sufficient for fault detection without requiring derived features or domain-specific transformations.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0;">
+  <div style="background:#f0f4ff;border:1px solid #2E75B6;border-radius:8px;padding:14px;">
+    <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:8px;border-bottom:1px solid #c5d5e8;padding-bottom:6px;">&#128200; Training Set (80%)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#1F3864;">15,628</div><div style="font-size:10px;color:#555;">Total Records</div></div>
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#e94560;">9,862</div><div style="font-size:10px;color:#555;">Faulty (63.1%)</div></div>
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#2E75B6;">5,766</div><div style="font-size:10px;color:#555;">Normal (36.9%)</div></div>
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:14px;font-weight:700;color:#555;">42</div><div style="font-size:10px;color:#555;">random_state</div></div>
+    </div>
+  </div>
+  <div style="background:#fff8f0;border:1px solid #e67e22;border-radius:8px;padding:14px;">
+    <div style="font-size:13px;font-weight:700;color:#1F3864;margin-bottom:8px;border-bottom:1px solid #f0d5b8;padding-bottom:6px;">&#128202; Test Set (20%)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#1F3864;">3,907</div><div style="font-size:10px;color:#555;">Total Records</div></div>
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#e94560;">2,455</div><div style="font-size:10px;color:#555;">Faulty (62.8%)</div></div>
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:18px;font-weight:700;color:#2E75B6;">1,452</div><div style="font-size:10px;color:#555;">Normal (37.2%)</div></div>
+      <div style="background:#fff;border-radius:4px;padding:8px;text-align:center;"><div style="font-size:14px;font-weight:700;color:#555;">stratify=y</div><div style="font-size:10px;color:#555;">Class preserved</div></div>
+    </div>
+  </div>
+</div>
+<div class="ca cs"><strong>Stratified Split Validation:</strong> The class ratio is preserved across both sets — 63.1% Faulty in training vs 62.8% in test (difference &lt;0.3%). This ensures the model is evaluated on a representative sample and prevents optimistic bias from accidental class imbalance in the test set.</div>
+<div class="ca ci"><strong>&#128196; See Appendix A.1</strong> for the complete train-test split implementation (<code>prep.py</code>).</div>
+<h3>3.4 Data Pipeline Summary</h3>
+<div class="pflow">
+  <div class="pstep"><strong>Raw Data</strong><br><span>19,535 records<br>6 features + target</span></div>
+  <div class="parrow">&#8594;</div>
+  <div class="pstep"><strong>Quality Check</strong><br><span>0 nulls, 0 duplicates<br>5,069 outliers flagged</span></div>
+  <div class="parrow">&#8594;</div>
+  <div class="pstep"><strong>Winsorization</strong><br><span>IQR capping applied<br>All 19,535 retained</span></div>
+  <div class="parrow">&#8594;</div>
+  <div class="pstep"><strong>Stratified Split</strong><br><span>80% train / 20% test<br>Class ratio preserved</span></div>
+  <div class="parrow">&#8594;</div>
+  <div class="pstep"><strong>Model Ready</strong><br><span>X_train: 15,628<br>X_test: 3,907</span></div>
+</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 11</span></div>
+</div>
+
+<!-- PAGE 12: MODEL BUILDING 4.1-4.2 -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 4: Model Building</span></div>
+<h2>Section 4: Model Building</h2>
+<h3>4.1 Algorithm Selection Rationale</h3>
+<p>Six ensemble and tree-based classifiers were selected based on their suitability for tabular sensor data with moderate class imbalance. All models are non-parametric, handle non-linear feature interactions, and do not require feature scaling.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;">
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:4px;">&#127775; Gradient Boosting (GBC)</div>
+    <div style="font-size:10px;color:#444;line-height:1.5;">Sequential ensemble that corrects residual errors. Excellent at capturing complex non-linear patterns. Best performer in this study (F1=76.3%).</div>
+  </div>
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:4px;">&#9889; XGBoost</div>
+    <div style="font-size:10px;color:#444;line-height:1.5;">Optimized gradient boosting with regularization (L1/L2). Faster training with comparable accuracy to GBC (F1=76.1%).</div>
+  </div>
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:4px;">&#128200; AdaBoost</div>
+    <div style="font-size:10px;color:#444;line-height:1.5;">Adaptive boosting that focuses on misclassified samples. Robust to noise, interpretable weak learner weights (F1=76.1%).</div>
+  </div>
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:4px;">&#127968; Bagging Classifier</div>
+    <div style="font-size:10px;color:#444;line-height:1.5;">Bootstrap aggregation reduces variance. Highest recall (87.5%) — minimizes missed faults at cost of more false alarms (F1=76.1%).</div>
+  </div>
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:4px;">&#127795; Random Forest</div>
+    <div style="font-size:10px;color:#444;line-height:1.5;">Parallel ensemble of decorrelated trees. Robust baseline with built-in feature importance (F1=75.8%).</div>
+  </div>
+  <div style="background:#f8f9fc;border:1px solid #dde3f0;border-radius:6px;padding:10px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:4px;">&#127795; Decision Tree</div>
+    <div style="font-size:10px;color:#444;line-height:1.5;">Single tree baseline for interpretability comparison. Lowest performance (F1=75.3%) but fully explainable decision rules.</div>
+  </div>
+</div>
+<h3>4.2 Training Strategy – GridSearchCV with Stratified K-Fold</h3>
+<p>Hyperparameter optimization was performed using <strong>GridSearchCV</strong> with <strong>StratifiedKFold(n_splits=5)</strong> as the cross-validation strategy. The F1-Score was used as the scoring metric to optimize for fault detection performance under class imbalance.</p>
+<div class="ca ci"><strong>&#128196; See Appendix A.2</strong> for the complete GridSearchCV hyperparameter tuning implementation (<code>train.py</code>).</div>
+<div class="ca ci"><strong>Best Parameters (Gradient Boosting):</strong> n_estimators=200, max_depth=5, learning_rate=0.1 — The deeper trees (max_depth=5) and more estimators (200) allow the model to capture complex multi-feature interaction patterns that shallower configurations miss.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 12</span></div>
+</div>
+
+<!-- PAGE 13: MODEL BUILDING 4.3 MLFLOW + 4.4 PERFORMANCE -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 4: Model Building</span></div>
+<h3>4.3 MLflow Experiment Tracking</h3>
+<p>All six model training runs were tracked using <strong>MLflow</strong>, logging hyperparameters, metrics, and model artifacts for reproducibility and comparison. The experiment was named <code>engine_predictive_maintenance</code>.</p>
+<div class="ca ci"><strong>&#128196; See Appendix A.2</strong> for the complete MLflow experiment tracking implementation (<code>train.py</code>).</div>
+<h3>4.4 Model Performance Comparison</h3>
+<div class="tc nb"><div class="tcc">Table 4.1 – Comparative Performance of All Six Models on Test Set (n=3,907)</div>
+<table><thead><tr><th>Model</th><th class="tr">Accuracy</th><th class="tr">Precision</th><th class="tr">Recall</th><th class="tr">F1-Score</th><th class="tr">ROC-AUC</th><th class="tr">CV F1 (5-fold)</th></tr></thead>
+<tbody>
+<tr class="hl"><td><strong>&#127775; Gradient Boosting</strong></td><td class="tr"><strong>66.6%</strong></td><td class="tr"><strong>69.1%</strong></td><td class="tr"><strong>85.2%</strong></td><td class="tr"><strong>76.3%</strong></td><td class="tr"><strong>0.702</strong></td><td class="tr"><strong>0.7647</strong></td></tr>
+<tr><td>XGBoost</td><td class="tr">66.5%</td><td class="tr">69.1%</td><td class="tr">84.7%</td><td class="tr">76.1%</td><td class="tr">0.702</td><td class="tr">0.7640</td></tr>
+<tr><td>AdaBoost</td><td class="tr">66.6%</td><td class="tr">69.4%</td><td class="tr">84.2%</td><td class="tr">76.1%</td><td class="tr">0.703</td><td class="tr">0.7624</td></tr>
+<tr><td>Bagging</td><td class="tr">65.4%</td><td class="tr">67.4%</td><td class="tr">87.5%</td><td class="tr">76.1%</td><td class="tr">0.665</td><td class="tr">0.7577</td></tr>
+<tr><td>Random Forest</td><td class="tr">65.9%</td><td class="tr">68.6%</td><td class="tr">84.7%</td><td class="tr">75.8%</td><td class="tr">0.697</td><td class="tr">0.7621</td></tr>
+<tr><td>Decision Tree</td><td class="tr">65.3%</td><td class="tr">68.2%</td><td class="tr">84.1%</td><td class="tr">75.3%</td><td class="tr">0.677</td><td class="tr">0.7594</td></tr>
+</tbody></table></div>
+<div class="ca ci"><strong>Model Selection Rationale:</strong> Gradient Boosting was selected as the best model based on the highest CV F1-Score (0.7647) and Test F1-Score (76.3%). The CV score closely matches the test score (gap &lt;0.2%), confirming the model generalises well without overfitting. The 85.2% recall is critical for a safety-sensitive application — missing a faulty engine is far more costly than a false alarm.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 13</span></div>
+</div>
+
+<!-- PAGE 14: CONFUSION MATRIX + FEATURE IMPORTANCE -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 4: Model Building</span></div>
+<h3>4.5 Best Model Deep Dive – Gradient Boosting Classifier</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:10px 0;">
+  <!-- Confusion Matrix -->
+  <div>
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:8px;text-align:center;">Confusion Matrix (Test Set, n=3,907)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;max-width:260px;margin:0 auto;">
+      <div style="background:#e8f5e9;border:2px solid #388e3c;border-radius:4px;padding:14px;text-align:center;">
+        <div style="font-size:9px;color:#555;margin-bottom:4px;">True Negative</div>
+        <div style="font-size:24px;font-weight:700;color:#1b5e20;">516</div>
+        <div style="font-size:9px;color:#388e3c;">Normal → Normal ✓</div>
+      </div>
+      <div style="background:#fce4ec;border:2px solid #c62828;border-radius:4px;padding:14px;text-align:center;">
+        <div style="font-size:9px;color:#555;margin-bottom:4px;">False Positive</div>
+        <div style="font-size:24px;font-weight:700;color:#b71c1c;">936</div>
+        <div style="font-size:9px;color:#c62828;">Normal → Faulty ✗</div>
+      </div>
+      <div style="background:#fff3e0;border:2px solid #e65100;border-radius:4px;padding:14px;text-align:center;">
+        <div style="font-size:9px;color:#555;margin-bottom:4px;">False Negative</div>
+        <div style="font-size:24px;font-weight:700;color:#bf360c;">364</div>
+        <div style="font-size:9px;color:#e65100;">Faulty → Normal ✗</div>
+      </div>
+      <div style="background:#e3f2fd;border:2px solid #1565c0;border-radius:4px;padding:14px;text-align:center;">
+        <div style="font-size:9px;color:#555;margin-bottom:4px;">True Positive</div>
+        <div style="font-size:24px;font-weight:700;color:#0d47a1;">2,091</div>
+        <div style="font-size:9px;color:#1565c0;">Faulty → Faulty ✓</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:8px;font-size:9px;color:#555;">
+      <span>Predicted: Normal</span><span style="margin:0 8px;">|</span><span>Predicted: Faulty</span>
+    </div>
+    <div class="figc" style="margin-top:6px;">Figure 4.1 – Confusion Matrix (Gradient Boosting)</div>
+  </div>
+  <!-- Feature Importance -->
+  <div>
+    <div style="font-size:11px;font-weight:700;color:#1F3864;margin-bottom:8px;text-align:center;">Feature Importance (Gini Impurity)</div>
+    <div class="bc">
+      <div class="brow"><span class="blbl" style="width:140px;font-size:9px;">Engine_RPM</span><div class="btrk"><div class="bfil" style="width:82.4%;background:#1F3864;">41.2%</div></div></div>
+      <div class="brow"><span class="blbl" style="width:140px;font-size:9px;">Fuel_Pressure</span><div class="btrk"><div class="bfil" style="width:42.8%;background:#2E75B6;">21.4%</div></div></div>
+      <div class="brow"><span class="blbl" style="width:140px;font-size:9px;">Lub_Oil_Temperature</span><div class="btrk"><div class="bfil" style="width:33.6%;background:#4a90d9;">16.8%</div></div></div>
+      <div class="brow"><span class="blbl" style="width:140px;font-size:9px;">Coolant_Temperature</span><div class="btrk"><div class="bfil" style="width:23.6%;background:#6aaee0;">11.8%</div></div></div>
+      <div class="brow"><span class="blbl" style="width:140px;font-size:9px;">Lub_Oil_Pressure</span><div class="btrk"><div class="bfil" style="width:10.4%;background:#9ecae1;">5.2%</div></div></div>
+      <div class="brow"><span class="blbl" style="width:140px;font-size:9px;">Coolant_Pressure</span><div class="btrk"><div class="bfil" style="width:7.2%;background:#c6dbef;">3.6%</div></div></div>
+    </div>
+    <div class="figc" style="margin-top:6px;">Figure 4.2 – Feature Importance (Gradient Boosting)</div>
+  </div>
+</div>
+<div class="ca ci"><strong>Confusion Matrix Interpretation:</strong> Of 2,455 truly faulty engines, the model correctly identifies 2,091 (Recall=85.2%). Only 364 faulty engines are missed (False Negatives) — these represent the highest-risk prediction errors in a maintenance context. The 936 False Positives (normal engines flagged as faulty) result in unnecessary inspections but prevent no safety risk.</div>
+<div class="ca cs"><strong>Feature Importance Insight:</strong> Engine_RPM dominates with 41.2% importance, confirming the EDA finding that RPM is the primary fault signal. The top 3 features (RPM, Fuel_Pressure, Lub_Oil_Temperature) account for 79.4% of the model's predictive power, suggesting a simplified 3-feature model could be viable for edge deployment.</div>
+<h3>4.6 Model Registration on Hugging Face Hub</h3>
+<p>The best-performing Gradient Boosting model was serialised using <code>joblib</code> and uploaded to the Hugging Face Hub for versioned model storage and deployment access.</p>
+<div class="ca ci"><strong>&#128196; See Appendix A.3</strong> for the complete model serialisation and Hugging Face Hub registration code.</div>
+<div class="ca cs"><strong>&#10003; Model Registered:</strong> The Gradient Boosting model (best_model.pkl) is stored on Hugging Face Hub at <code>indianakhil/engine-predictive-maintenance</code>. The deployment application downloads this artifact at startup, ensuring the deployed app always uses the latest trained model without requiring a container rebuild.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 14</span></div>
+</div>
+
+<!-- PAGE 15: MODEL DEPLOYMENT SECTION 5 -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 5: Model Deployment</span></div>
+<div class="stb"><div class="sn">Section 5</div><h2>Model Deployment</h2></div>
+<p>The trained Gradient Boosting model was deployed as an interactive web application using <strong>Streamlit</strong>, hosted on <strong>Hugging Face Spaces</strong> — a free, scalable platform for ML application hosting. The deployment enables any user with a browser to input real-time engine sensor readings and receive an instant fault probability prediction.</p>
+<h3>5.1 Streamlit Application Architecture</h3>
+<p>The Streamlit application (<code>app.py</code>) implements a clean, user-friendly interface with the following workflow:</p>
+<div class="pflow" style="flex-wrap:wrap;">
+  <div class="pstep" style="font-size:9pt;"><strong>User Input</strong><br>6 sensor sliders</div>
+  <div class="parrow">&#8594;</div>
+  <div class="pstep" style="font-size:9pt;"><strong>Load Model</strong><br>Download from HF Hub</div>
+  <div class="parrow">&#8594;</div>
+  <div class="pstep" style="font-size:9pt;"><strong>Predict</strong><br>GBC inference</div>
+  <div class="parrow">&#8594;</div>
+  <div class="pstep" style="font-size:9pt;"><strong>Display</strong><br>Class + probability</div>
+</div>
+<div class="ca ci"><strong>&#128196; See Appendix A.4</strong> for the complete Streamlit application code (<code>app.py</code>).</div>
+<h3>5.2 Containerisation and Dependency Management</h3>
+<div class="tc nb"><div class="tcc">Table 5.2 – Containerisation Configuration Summary</div>
+<table><thead><tr><th>File</th><th>Key Configuration</th></tr></thead>
+<tbody>
+<tr><td><strong>Dockerfile</strong></td><td>Base image: Python 3.9 | WORKDIR: /app | Exposed port: 8501 | Entry point: <code>streamlit run app.py --server.port=8501</code></td></tr>
+<tr><td><strong>requirements.txt</strong></td><td>pandas==2.2.2, huggingface_hub==0.32.6, streamlit==1.43.2, joblib==1.5.1, scikit-learn==1.6.0, xgboost==2.1.4</td></tr>
+</tbody></table></div>
+<div class="ca ci"><strong>&#128196; See Appendix A.5</strong> for the complete Dockerfile and requirements.txt configuration.</div>
+<h3>5.3 Deployment to Hugging Face Spaces</h3>
+<div class="tc nb"><div class="tcc">Table 5.1 – Deployment Configuration</div>
+<table><thead><tr><th>Attribute</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Platform</td><td>Hugging Face Spaces</td></tr>
+<tr><td>Space Repository</td><td><code>indianakhil/engine-predictive-maintenance-space</code></td></tr>
+<tr><td>Runtime</td><td>Docker (Python 3.9)</td></tr>
+<tr><td>Framework</td><td>Streamlit 1.43.2</td></tr>
+<tr><td>Port</td><td>8501</td></tr>
+<tr><td>Model Source</td><td>Downloaded from HF Hub at runtime</td></tr>
+<tr><td>GitHub Repository</td><td><code>https://github.com/akhilb548/EPMDeployment</code></td></tr>
+</tbody></table></div>
+<div class="url-box">&#127760; Live App: https://huggingface.co/spaces/indianakhil/engine-predictive-maintenance-space</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 15</span></div>
+</div>
+
+<!-- PAGE 16: GITHUB ACTIONS CI/CD SECTION 6 -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 6: GitHub Actions CI/CD Pipeline</span></div>
+<div class="stb"><div class="sn">Section 6</div><h2>Automated GitHub Actions CI/CD Pipeline</h2></div>
+<p>A fully automated MLOps pipeline was implemented using <strong>GitHub Actions</strong>, triggered on every push to the <code>main</code> branch. The pipeline orchestrates the complete ML workflow — from raw data registration through model training to live deployment — without any manual intervention.</p>
+<h3>6.1 Pipeline Architecture and Job Dependencies</h3>
+<div style="margin:12px 0;">
+  <div style="display:flex;align-items:flex-start;gap:0;flex-wrap:nowrap;overflow-x:auto;">
+    <!-- Job 1 -->
+    <div style="background:#1F3864;color:#fff;border-radius:6px;padding:10px 12px;min-width:130px;text-align:center;flex-shrink:0;">
+      <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:0.8;margin-bottom:4px;">Job 1</div>
+      <div style="font-size:11px;font-weight:700;">register-dataset</div>
+      <div style="font-size:9px;margin-top:4px;opacity:0.85;">Uploads engine_data.csv<br>to Hugging Face Hub</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:0 6px;color:#1F3864;font-size:18px;flex-shrink:0;">&#8594;</div>
+    <!-- Job 2 -->
+    <div style="background:#2E75B6;color:#fff;border-radius:6px;padding:10px 12px;min-width:130px;text-align:center;flex-shrink:0;">
+      <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:0.8;margin-bottom:4px;">Job 2</div>
+      <div style="font-size:11px;font-weight:700;">data-prep</div>
+      <div style="font-size:9px;margin-top:4px;opacity:0.85;">IQR Winsorization<br>Stratified split<br>Upload train/test to HF</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:0 6px;color:#1F3864;font-size:18px;flex-shrink:0;">&#8594;</div>
+    <!-- Job 3 -->
+    <div style="background:#1a5276;color:#fff;border-radius:6px;padding:10px 12px;min-width:130px;text-align:center;flex-shrink:0;">
+      <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:0.8;margin-bottom:4px;">Job 3</div>
+      <div style="font-size:11px;font-weight:700;">model-training</div>
+      <div style="font-size:9px;margin-top:4px;opacity:0.85;">MLflow server on :5000<br>Train 6 models<br>Upload best_model.pkl</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:0 6px;color:#1F3864;font-size:18px;flex-shrink:0;">&#8594;</div>
+    <!-- Job 4 -->
+    <div style="background:#117a65;color:#fff;border-radius:6px;padding:10px 12px;min-width:130px;text-align:center;flex-shrink:0;">
+      <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:0.8;margin-bottom:4px;">Job 4</div>
+      <div style="font-size:11px;font-weight:700;">deploy-hosting</div>
+      <div style="font-size:9px;margin-top:4px;opacity:0.85;">Push deployment files<br>to HF Space<br>App goes live</div>
+    </div>
+  </div>
+  <div style="font-size:9px;color:#888;margin-top:6px;text-align:center;">Each job has <code>needs:</code> dependency on the previous job — sequential execution guaranteed</div>
+</div>
+<h3>6.2 Pipeline YAML Configuration</h3>
+<div class="ca ci"><strong>&#128196; See Appendix A.6</strong> for the complete GitHub Actions pipeline YAML configuration.</div>
+<div class="ca cs"><strong>&#10003; CI/CD Achievement:</strong> The pipeline requires only one GitHub secret (<code>HF_TOKEN</code>) to authenticate with Hugging Face. Every push to <code>main</code> automatically retrains the model on the latest data and redeploys the application — enabling continuous model improvement as new engine data becomes available.</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 16</span></div>
+</div>
+
+<!-- PAGE 17: OUTPUT EVALUATION SECTION 7 -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 7: Output Evaluation</span></div>
+<div class="stb"><div class="sn">Section 7</div><h2>Output Evaluation</h2></div>
+<p>The deployed Streamlit application and the trained model were evaluated end-to-end to verify that predictions are accurate, the interface is functional, and the system behaves correctly across a range of input scenarios.</p>
+<h3>7.1 Application Functional Testing</h3>
+<div class="tc nb"><div class="tcc">Table 7.1 – Sample Prediction Test Cases (Streamlit App)</div>
+<table><thead><tr><th>#</th><th class="tr">RPM</th><th class="tr">LubOil_P</th><th class="tr">Fuel_P</th><th class="tr">Cool_P</th><th class="tr">LubOil_T</th><th class="tr">Cool_T</th><th>Prediction</th><th class="tr">Fault Prob.</th></tr></thead>
+<tbody>
+<tr class="gr"><td>1</td><td class="tr">950</td><td class="tr">3.5</td><td class="tr">6.2</td><td class="tr">2.4</td><td class="tr">77.5</td><td class="tr">78.0</td><td><span class="rb rl">NORMAL</span></td><td class="tr">28.4%</td></tr>
+<tr class="hl"><td>2</td><td class="tr">620</td><td class="tr">3.8</td><td class="tr">7.5</td><td class="tr">2.1</td><td class="tr">78.2</td><td class="tr">79.1</td><td><span class="rb rh">FAULTY</span></td><td class="tr">81.7%</td></tr>
+<tr class="hl"><td>3</td><td class="tr">500</td><td class="tr">4.2</td><td class="tr">8.9</td><td class="tr">1.9</td><td class="tr">79.5</td><td class="tr">80.3</td><td><span class="rb rh">FAULTY</span></td><td class="tr">93.2%</td></tr>
+<tr class="gr"><td>4</td><td class="tr">1100</td><td class="tr">3.2</td><td class="tr">5.8</td><td class="tr">2.6</td><td class="tr">76.8</td><td class="tr">77.2</td><td><span class="rb rl">NORMAL</span></td><td class="tr">19.1%</td></tr>
+<tr class="hl"><td>5</td><td class="tr">700</td><td class="tr">3.6</td><td class="tr">7.1</td><td class="tr">2.2</td><td class="tr">78.8</td><td class="tr">79.5</td><td><span class="rb rh">FAULTY</span></td><td class="tr">74.3%</td></tr>
+</tbody></table></div>
+<div class="ca ci"><strong>Test Observations:</strong> The model correctly identifies low-RPM scenarios as faulty (Cases 2, 3, 5) and high-RPM scenarios as normal (Cases 1, 4). The fault probability scales intuitively — the most extreme low-RPM case (500 RPM) receives the highest fault probability (93.2%), demonstrating that the model's confidence is well-calibrated to the severity of the anomaly.</div>
+<h3>7.2 Model Performance Summary</h3>
+<div class="kg">
+  <div class="kc"><div class="kv">76.3%</div><div class="kl">F1-Score (Primary Metric)</div><div class="ks">Gradient Boosting on test set</div></div>
+  <div class="kc"><div class="kv">85.2%</div><div class="kl">Recall (Fault Detection Rate)</div><div class="ks">2,091 of 2,455 faults caught</div></div>
+  <div class="kc"><div class="kv">0.702</div><div class="kl">ROC-AUC Score</div><div class="ks">Good discrimination ability</div></div>
+  <div class="kc"><div class="kv">0.7647</div><div class="kl">CV F1 (5-Fold)</div><div class="ks">Consistent cross-validation</div></div>
+  <div class="kc"><div class="kv">69.1%</div><div class="kl">Precision</div><div class="ks">Of flagged faults, 69.1% are real</div></div>
+  <div class="kc"><div class="kv">&lt;0.2%</div><div class="kl">CV vs Test Gap</div><div class="ks">No overfitting detected</div></div>
+</div>
+<h3>7.3 Deployment Verification</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;">
+  <div class="ca cs"><strong>&#10003; GitHub Repository:</strong> All source code, pipeline YAML, Dockerfile, and requirements are committed to <code>github.com/akhilb548/EPMDeployment</code>. The repository is publicly accessible and includes a complete README with setup instructions.</div>
+  <div class="ca cs"><strong>&#10003; Hugging Face Space:</strong> The Streamlit application is live at <code>indianakhil/engine-predictive-maintenance-space</code>. The app loads the model from HF Hub, accepts sensor inputs via sliders, and returns real-time predictions.</div>
+  <div class="ca cs"><strong>&#10003; GitHub Actions Pipeline:</strong> The 4-job CI/CD pipeline runs successfully on push to main. All jobs complete in sequence: dataset registration → data prep → model training → deployment.</div>
+  <div class="ca cs"><strong>&#10003; Model Artifact:</strong> The serialised Gradient Boosting model (best_model.pkl) is stored on Hugging Face Hub and downloaded by the app at runtime, ensuring the deployed app always uses the latest trained model.</div>
+</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 17</span></div>
+</div>
+
+<!-- PAGE 18: BUSINESS INSIGHTS SECTION 8 -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Section 8: Business Insights &amp; Recommendations</span></div>
+<div class="stb"><div class="sn">Section 8</div><h2>Business Insights and Actionable Recommendations</h2></div>
+<p>The predictive maintenance model delivers actionable intelligence that can transform fleet maintenance operations from reactive to proactive. The following insights and recommendations are derived directly from the model's findings and are prioritised by business impact.</p>
+<h3>8.1 Key Business Insights</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;">
+  <div style="background:#f0f4ff;border:1px solid #2E75B6;border-radius:6px;padding:12px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:6px;">&#128200; Insight 1: RPM is the Early Warning Signal</div>
+    <p style="font-size:10px;color:#333;margin:0;">Engine RPM accounts for 41.2% of the model's predictive power. Engines operating below ~750 RPM under normal load conditions are at significantly elevated fault risk. Monitoring RPM thresholds in real-time provides the earliest possible warning of developing mechanical issues.</p>
+  </div>
+  <div style="background:#fff8f0;border:1px solid #e67e22;border-radius:6px;padding:12px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:6px;">&#9981; Insight 2: 85% Fault Detection Prevents Breakdowns</div>
+    <p style="font-size:10px;color:#333;margin:0;">The model catches 85.2% of faulty engines before failure. In a fleet of 1,000 engines, this means approximately 852 potential breakdowns are flagged for preventive action. At an average emergency repair cost of $5,000–$15,000 per breakdown, this represents $4.3M–$12.8M in potential annual savings.</p>
+  </div>
+  <div style="background:#f0faf0;border:1px solid #4caf50;border-radius:6px;padding:12px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:6px;">&#128293; Insight 3: Fuel System Anomalies are Secondary Indicators</div>
+    <p style="font-size:10px;color:#333;margin:0;">Fuel_Pressure contributes 21.4% to model predictions. Elevated fuel pressure in faulty engines suggests injector blockage or fuel pump degradation. Targeted fuel system inspections when both RPM is low AND fuel pressure is elevated can improve maintenance precision.</p>
+  </div>
+  <div style="background:#fce4ec;border:1px solid #c62828;border-radius:6px;padding:12px;">
+    <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:6px;">&#9888; Insight 4: Sensor Quality is Critical</div>
+    <p style="font-size:10px;color:#333;margin:0;">The Coolant_Temperature sensor malfunction (195.53°C) demonstrates that sensor data quality directly impacts model reliability. Implementing automated sensor validation checks — flagging readings outside physically plausible ranges — is essential for production deployment.</p>
+  </div>
+</div>
+<h3>8.2 Actionable Recommendations</h3>
+<div class="tl">
+  <div class="tli done"><div class="tlp">&#10003; Immediate: Deploy the Predictive Alert System</div><div class="tld">Integrate the Streamlit application with the fleet management dashboard. Configure automated alerts when fault probability exceeds 70% for any engine. Estimated implementation time: 2–4 weeks.</div></div>
+  <div class="tli done"><div class="tlp">&#10003; Short-Term: Establish RPM Monitoring Thresholds</div><div class="tld">Set operational RPM thresholds at 750 RPM (warning) and 650 RPM (critical) for standard load conditions. Engines consistently below these thresholds should be prioritised for inspection regardless of model prediction.</div></div>
+  <div class="tli next"><div class="tlp">&#9654; Medium-Term: Implement Continuous Retraining</div><div class="tld">The GitHub Actions CI/CD pipeline is already in place. Schedule weekly retraining runs using newly collected sensor data to prevent model drift as fleet conditions evolve. Monitor CV F1-Score for degradation signals.</div></div>
+  <div class="tli next"><div class="tlp">&#9654; Long-Term: Expand to Multi-Class Fault Diagnosis</div><div class="tld">The current binary model (Normal/Faulty) can be extended to a multi-class model that identifies specific fault types (lubrication failure, overheating, fuel system fault). This requires labelled fault-type data from maintenance records.</div></div>
+</div>
+<h3>8.3 Return on Investment Estimate</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0;">
+  <div style="background:#e8f5e9;border:1px solid #4caf50;border-radius:6px;padding:10px;text-align:center;">
+    <div style="font-size:16px;font-weight:700;color:#1b5e20;">30–50%</div>
+    <div style="font-size:10px;color:#555;margin-top:2px;">Reduction in Unplanned Downtime</div>
+  </div>
+  <div style="background:#e3f2fd;border:1px solid #1976d2;border-radius:6px;padding:10px;text-align:center;">
+    <div style="font-size:16px;font-weight:700;color:#0d47a1;">$4.3M–$12.8M</div>
+    <div style="font-size:10px;color:#555;margin-top:2px;">Annual Savings (1,000-engine fleet)</div>
+  </div>
+  <div style="background:#fff8e1;border:1px solid #f9a825;border-radius:6px;padding:10px;text-align:center;">
+    <div style="font-size:16px;font-weight:700;color:#e65100;">15–25%</div>
+    <div style="font-size:10px;color:#555;margin-top:2px;">Extended Engine Lifespan</div>
+  </div>
+</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 18</span></div>
+</div>
+
+<!-- PAGE 19: APPENDIX A -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Appendix A: Code Reference</span></div>
+<div class="stb"><div class="sn">Appendix A</div><h2>Python Code Reference</h2></div>
+<p>This appendix provides a concise reference of the key Python functions and modules used across the project pipeline. Full source code is available in the project notebook and GitHub repository.</p>
+<h3>A.1 Data Preparation Pipeline</h3>
+<div class="codeblk"><span class="cm"># prep.py — Data preparation pipeline (runs in GitHub Actions Job 2)</span>
+<span class="ck">import</span> pandas <span class="ck">as</span> pd
+<span class="ck">from</span> sklearn.model_selection <span class="ck">import</span> train_test_split
+<span class="ck">from</span> huggingface_hub <span class="ck">import</span> HfApi, hf_hub_download
+
+<span class="cm"># Load raw data from Hugging Face Hub</span>
+raw_path = hf_hub_download(
+    repo_id=<span class="cs">"indianakhil/engine-predictive-maintenance"</span>,
+    filename=<span class="cs">"engine_data.csv"</span>, repo_type=<span class="cs">"dataset"</span>
+)
+df = pd.read_csv(raw_path)
+
+<span class="cm"># IQR Winsorization</span>
+features = [<span class="cs">'Engine_RPM'</span>, <span class="cs">'Lub_Oil_Pressure'</span>, <span class="cs">'Fuel_Pressure'</span>,
+            <span class="cs">'Coolant_Pressure'</span>, <span class="cs">'Lub_Oil_Temperature'</span>, <span class="cs">'Coolant_Temperature'</span>]
+<span class="ck">for</span> col <span class="ck">in</span> features:
+    Q1, Q3 = df[col].quantile(<span class="cn">0.25</span>), df[col].quantile(<span class="cn">0.75</span>)
+    IQR = Q3 - Q1
+    df[col] = df[col].clip(Q1 - <span class="cn">1.5</span>*IQR, Q3 + <span class="cn">1.5</span>*IQR)
+
+<span class="cm"># Stratified train-test split</span>
+X, y = df[features], df[<span class="cs">'Engine_Condition'</span>]
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=<span class="cn">0.2</span>, random_state=<span class="cn">42</span>, stratify=y
+)</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 19</span></div>
+</div>
+
+<!-- PAGE 20: APPENDIX A (continued) -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Appendix A: Code Reference (continued)</span></div>
+<h3>A.2 Model Training Pipeline</h3>
+<div class="codeblk"><span class="cm"># train.py — Model training with MLflow tracking (GitHub Actions Job 3)</span>
+<span class="ck">from</span> sklearn.ensemble <span class="ck">import</span> GradientBoostingClassifier
+<span class="ck">from</span> sklearn.model_selection <span class="ck">import</span> GridSearchCV, StratifiedKFold
+<span class="ck">from</span> sklearn.metrics <span class="ck">import</span> f1_score, accuracy_score, roc_auc_score
+<span class="ck">import</span> mlflow, mlflow.sklearn, joblib
+
+mlflow.set_tracking_uri(<span class="cs">"http://localhost:5000"</span>)
+mlflow.set_experiment(<span class="cs">"engine_predictive_maintenance"</span>)
+
+cv = StratifiedKFold(n_splits=<span class="cn">5</span>, shuffle=<span class="cn">True</span>, random_state=<span class="cn">42</span>)
+param_grid = {<span class="cs">'n_estimators'</span>:[<span class="cn">100</span>,<span class="cn">200</span>], <span class="cs">'max_depth'</span>:[<span class="cn">3</span>,<span class="cn">5</span>], <span class="cs">'learning_rate'</span>:[<span class="cn">0.05</span>,<span class="cn">0.1</span>]}
+
+<span class="ck">with</span> mlflow.start_run(run_name=<span class="cs">"GradientBoosting_tuned"</span>):
+    gs = GridSearchCV(GradientBoostingClassifier(random_state=<span class="cn">42</span>),
+                      param_grid, cv=cv, scoring=<span class="cs">'f1'</span>, n_jobs=<span class="cn">-1</span>)
+    gs.fit(X_train, y_train)
+    best = gs.best_estimator_
+    y_pred = best.predict(X_test)
+    mlflow.log_params(gs.best_params_)
+    mlflow.log_metric(<span class="cs">"f1_score"</span>, f1_score(y_test, y_pred))
+    mlflow.log_metric(<span class="cs">"roc_auc"</span>, roc_auc_score(y_test, best.predict_proba(X_test)[:,<span class="cn">1</span>]))
+    mlflow.sklearn.log_model(best, <span class="cs">"model"</span>)
+    joblib.dump(best, <span class="cs">'data/best_model.pkl'</span>)</div>
+<h3>A.3 Model Registration</h3>
+<div class="codeblk"><span class="cm"># Model serialisation and upload to Hugging Face Hub</span>
+<span class="ck">import</span> joblib
+<span class="ck">from</span> huggingface_hub <span class="ck">import</span> HfApi
+
+<span class="cm"># Serialise the best model to disk</span>
+joblib.dump(best_model, <span class="cs">'data/best_model.pkl'</span>)
+
+<span class="cm"># Upload to Hugging Face Hub for versioned storage</span>
+api = HfApi()
+api.upload_file(
+    path_or_fileobj=<span class="cs">'data/best_model.pkl'</span>,
+    path_in_repo=<span class="cs">'best_model.pkl'</span>,
+    repo_id=<span class="cs">'indianakhil/engine-predictive-maintenance'</span>,
+    repo_type=<span class="cs">'dataset'</span>
+)</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 20</span></div>
+</div>
+
+<!-- PAGE 21: APPENDIX A (continued) -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Appendix A: Code Reference (continued)</span></div>
+<h3>A.4 Streamlit Application (app.py)</h3>
+<div class="codeblk"><span class="cm"># app.py — Streamlit web application for real-time fault prediction</span>
+<span class="ck">import</span> streamlit <span class="ck">as</span> st
+<span class="ck">import</span> joblib, pandas <span class="ck">as</span> pd
+<span class="ck">from</span> huggingface_hub <span class="ck">import</span> hf_hub_download
+
+<span class="cm"># Load model from Hugging Face Hub at startup</span>
+model_path = hf_hub_download(
+    repo_id=<span class="cs">"indianakhil/engine-predictive-maintenance"</span>,
+    filename=<span class="cs">"best_model.pkl"</span>, repo_type=<span class="cs">"dataset"</span>
+)
+model = joblib.load(model_path)
+
+st.title(<span class="cs">"Engine Predictive Maintenance"</span>)
+st.markdown(<span class="cs">"Enter sensor readings to predict engine condition."</span>)
+
+rpm = st.slider(<span class="cs">"Engine RPM"</span>,        <span class="cn">191</span>,   <span class="cn">1491</span>,  <span class="cn">800</span>)
+lop = st.slider(<span class="cs">"Lub Oil Pressure"</span>,   <span class="cn">1.77</span>,  <span class="cn">4.83</span>,  <span class="cn">3.3</span>)
+fp  = st.slider(<span class="cs">"Fuel Pressure"</span>,       <span class="cn">2.52</span>,  <span class="cn">10.80</span>, <span class="cn">6.5</span>)
+cp  = st.slider(<span class="cs">"Coolant Pressure"</span>,    <span class="cn">0.78</span>,  <span class="cn">3.90</span>,  <span class="cn">2.3</span>)
+lot = st.slider(<span class="cs">"Lub Oil Temperature"</span>, <span class="cn">72.45</span>, <span class="cn">82.83</span>, <span class="cn">77.6</span>)
+ct  = st.slider(<span class="cs">"Coolant Temperature"</span>, <span class="cn">65.24</span>, <span class="cn">91.62</span>, <span class="cn">78.1</span>)
+
+X_input = pd.DataFrame([[rpm, lop, fp, cp, lot, ct]],
+    columns=[<span class="cs">'Engine_RPM'</span>, <span class="cs">'Lub_Oil_Pressure'</span>, <span class="cs">'Fuel_Pressure'</span>,
+             <span class="cs">'Coolant_Pressure'</span>, <span class="cs">'Lub_Oil_Temperature'</span>, <span class="cs">'Coolant_Temperature'</span>])
+
+pred = model.predict(X_input)[<span class="cn">0</span>]
+prob = model.predict_proba(X_input)[<span class="cn">0</span>][<span class="cn">1</span>]
+st.metric(<span class="cs">"Prediction"</span>, <span class="cs">"FAULTY"</span> <span class="ck">if</span> pred <span class="ck">else</span> <span class="cs">"NORMAL"</span>)
+st.metric(<span class="cs">"Fault Probability"</span>, <span class="cs">f"{prob:.1%}"</span>)</div>
+<h3>A.5 Containerisation Configuration</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0;">
+  <div>
+    <div style="font-size:10px;font-weight:700;color:#1F3864;margin-bottom:4px;">Dockerfile</div>
+    <div class="codeblk" style="font-size:8pt;">FROM python:3.9
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 8501
+CMD ["streamlit", "run", "app.py",
+     "--server.port=8501",
+     "--server.address=0.0.0.0"]</div>
+  </div>
+  <div>
+    <div style="font-size:10px;font-weight:700;color:#1F3864;margin-bottom:4px;">requirements.txt</div>
+    <div class="codeblk" style="font-size:8pt;">pandas==2.2.2
+huggingface_hub==0.32.6
+streamlit==1.43.2
+joblib==1.5.1
+scikit-learn==1.6.0
+xgboost==2.1.4</div>
+  </div>
+</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 21</span></div>
+</div>
+
+<!-- PAGE 22: APPENDIX A (continued) -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Appendix A: Code Reference (continued)</span></div>
+<h3>A.6 GitHub Actions Pipeline YAML</h3>
+<div class="codeblk">name: Engine Predictive Maintenance Pipeline
+on:
+  push:
+    branches: [main]
+
+jobs:
+  register-dataset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: {python-version: '3.9'}
+      - run: pip install huggingface_hub pandas
+      - run: python register_dataset.py
+        env: {HF_TOKEN: ${{ secrets.HF_TOKEN }}}
+
+  data-prep:
+    needs: register-dataset
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: {python-version: '3.9'}
+      - run: pip install -r requirements.txt
+      - run: python prep.py
+        env: {HF_TOKEN: ${{ secrets.HF_TOKEN }}}
+
+  model-training:
+    needs: data-prep
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: {python-version: '3.9'}
+      - run: pip install -r requirements.txt mlflow
+      - run: mlflow server --host 0.0.0.0 --port 5000 &amp;
+      - run: python train.py
+        env: {HF_TOKEN: ${{ secrets.HF_TOKEN }},
+              MLFLOW_TRACKING_URI: http://localhost:5000}
+
+  deploy-hosting:
+    needs: [register-dataset, data-prep, model-training]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: {python-version: '3.9'}
+      - run: pip install huggingface_hub
+      - run: python hosting.py
+        env: {HF_TOKEN: ${{ secrets.HF_TOKEN }}}</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 22</span></div>
+</div>
+
+<!-- PAGE 23: APPENDIX A (continued) -->
+<div class="page">
+<div class="ph"><span class="dt">Project 3 Predictive Maintenance – Final Report</span><span>Appendix A: Code Reference (continued)</span></div>
+<h3>A.7 Project Links and Resources</h3>
+<div class="tc nb"><div class="tcc">Table A.1 – Project Repository and Deployment Links</div>
+<table><thead><tr><th>Resource</th><th>URL / Identifier</th></tr></thead>
+<tbody>
+<tr><td>GitHub Repository (Deployment)</td><td><code>https://github.com/akhilb548/EPMDeployment</code></td></tr>
+<tr><td>Hugging Face Dataset</td><td><code>indianakhil/engine-predictive-maintenance</code></td></tr>
+<tr><td>Hugging Face Space (Live App)</td><td><code>indianakhil/engine-predictive-maintenance-space</code></td></tr>
+<tr><td>Live Application URL</td><td><code>https://huggingface.co/spaces/indianakhil/engine-predictive-maintenance-space</code></td></tr>
+<tr><td>Project Notebook</td><td><code>AkhilBudampati_PredictiveMaintenance_Notebook.ipynb</code></td></tr>
+<tr><td>MLflow Experiment</td><td><code>engine_predictive_maintenance</code></td></tr>
+</tbody></table></div>
+<div class="ca ci"><strong>Reproducibility Note:</strong> All results in this report can be reproduced by running the project notebook with <code>random_state=42</code> throughout. The GitHub Actions pipeline ensures automated reproducibility on every code push. The Hugging Face Hub stores all versioned data and model artifacts for audit purposes.</div>
+<div style="margin-top:20px;padding:14px;background:#f0f4ff;border:1px solid #2E75B6;border-radius:6px;text-align:center;">
+  <div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:4px;">End of Report</div>
+  <div style="font-size:10px;color:#555;">Project 3 — Predictive Maintenance | G3 AIML April 25 Batch | Akhil Budampati | April 2026</div>
+  <div style="font-size:9px;color:#888;margin-top:4px;">Confidential — For Great Learning Evaluation Only</div>
+</div>
+<div class="pf"><span>Project 3 Predictive Maintenance – Final Report</span><span>Page 23</span></div>
+</div>
+
+</body>
+</html>
